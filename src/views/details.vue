@@ -14,6 +14,7 @@ export default {
     },
     created(){
        this.movie=this.$route.query.movie
+    //    console.log(this.movie)
     }
 }
 </script>

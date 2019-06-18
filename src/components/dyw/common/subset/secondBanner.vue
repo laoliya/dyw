@@ -6,24 +6,20 @@
         <div class="topTitle">
             <div class="title">
                 <div class="leftTitle">
-                    <h3>                  
-                        <i class="iconfont icon-qushi"></i>    
+                    <h3>
                         最近流行的
                     </h3>
                 </div>
                 <div class="rightTitle">
                     <ul>
                         <li>
-                            <i class="iconfont icon-huo"></i>    
-                            <span>流行</span>
+                            系列
                         </li>
                         <li>
-                            <i class="iconfont icon-WatchEvent"></i>    
-                            <span>首映</span>
+                            原创
                         </li>
                         <li>
-                            <i class="iconfont icon-hao"></i>                            
-                            <span>最近加入</span>
+                            搜索
                         </li>
                     </ul>
                 </div>
@@ -52,7 +48,7 @@
             <!-- Swiper -->
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="(movie,index) of myMovies" :key=index @click="jumpvideo(movie.mid)">
+                <div class="swiper-slide" v-for="(movie,index) of myMovies" :key=index>
                         <img :src="'http://127.0.0.1:3000/img/'+movie.mimg" alt="">              
                         <!--电影名称-->
                         <h4>{{movie.mname}}</h4> 
@@ -103,7 +99,6 @@ export default {
            for(var m of this.movies){
                this.myMovies.push(m)
            }
-           console.log(this.movies)           
        },
        mclass(){
             //    将父元素传进来的数组 遍历到data中
@@ -115,11 +110,7 @@ export default {
     },
     methods: {       
         // 单机类型触发事件
-        selectiveType(){},
-        jumpvideo(mid){
-             localStorage.setItem('mid',mid);
-            this.$router.push("/play")
-        }
+        selectiveType(){}
     },
     mounted() {
 
@@ -143,7 +134,7 @@ export default {
     },
 }
 </script>
-<
+
 <style scoped>
     .secondbanner{    
         width: 1200px;
@@ -198,19 +189,6 @@ export default {
         cursor:pointer;
     }
 
-    .leftTitle>h3{
-        color: #fff;
-        font-size: 18px;
-    }
-
-    .rightTitle>ul>li{
-         margin-right:30px;
-         cursor: pointer;
-    }
-    .rightTitle span{font-size:15px}
-    .rightTitle i{font-size:20px;margin-right:5px}
-
-
 /*轮播*/
     .swiper-container {
       width: 100%;
@@ -233,9 +211,6 @@ export default {
       -webkit-align-items: center;
       align-items: center;
     }
-
-
-
     /* 单个item的组件 */
     .swiper-slide{
         width:180px !important;
@@ -259,5 +234,6 @@ export default {
         width:1200px;
         /* height:329px;  */
     }  
+    .swiper-button-next,.swiper-button-prev{top:45% !important}
    
 </style>

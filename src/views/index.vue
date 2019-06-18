@@ -2,14 +2,20 @@
     <div>
         <myheader></myheader>
         <!-- 轮播图 -->
-        <banner></banner>
+        <banner
+            :movies=movies 
+            :mclass=mclass
+        ></banner>
         <!-- 最近流行的 -->
         <secondBanner 
             :movies=movies 
             :mclass=mclass
         ></secondBanner>
         <!-- 电影系列 -->
-        <catena></catena>  
+        <catena
+            :ms=movies 
+            :mcs=mclass
+        ></catena>  
     </div>
 </template>
 

@@ -4,23 +4,23 @@
         <div class="title">
             <div class="leftTitle">
                 <h3>
-                    <i class="iconfont icon-bofang-"></i>
+                    <i class="iconfont icon-tianchongxing-"></i>
                     电影系列
                 </h3>
             </div>
             <div class="rightTitle">
                 <ul>
                     <li>
-                        <i class="iconfont icon-bofang-"></i>
-                        <span>系列</span>
+                        <i class="iconfont icon-dianying"></i>
+                        系列
                     </li>
                     <li>
                         <i class="iconfont icon-duihao"></i>
-                        <span>原创</span>
+                        原创
                     </li>
                     <li>
                         <i class="iconfont icon-sousuo"></i>
-                         <span>搜索</span>   
+                        搜索
                     </li>
                 </ul>
             </div>
@@ -57,20 +57,20 @@
         <div class="catena_content"> 
 
             <ul @click="GotoMDetail">
-                <li  v-for="(movie,index) of this.showMovies" :key=index @click="jumpvideo(movie.mid)">
-                    <!-- <router-link tag="a" :to="{path:'/play',query:{movie:movie}}"> -->
+                <li  v-for="(movie,index) of this.showMovies" :key=index>
+                    <router-link tag="a" :to="{path:'/details',query:{movie:movie.mid}}">
                         <img :src="'http://127.0.0.1:3000/img/'+movie.mimg" alt="">                   
                         <!--电影名称-->
                         <h4>{{movie.mname}}</h4> 
-                    <!-- </router-link>     -->
+                    </router-link>    
                         <div> <!--上映时间-->
                             <p>{{movie.myear}}</p>
                             <!--收藏  浏览  评分-->
                             <div>
                                 <ul>
-                                    <li  class="iconfont icon-xin1"></li>
-                                    <li  class="iconfont icon-yan"></li>
-                                    <li  class="iconfont icon-WatchEvent"></li>
+                                    <li  class="iconfont icon-collection"></li>
+                                    <li  class="iconfont icon-liulan"></li>
+                                    <li  class="iconfont icon-pingfen-"></li>
                                     <li>{{movie.mgrade}}</li>
                                 </ul>
                             </div>
@@ -108,16 +108,22 @@ export default {
         yearSort:[],//保存为选中按钮的年份的电影
         selectedMovie:[],//保存当前已经通过上类型挑选按钮选中的电影
     }},
-    // 在加载之前向服务器发送ajax请求
-    created(){
-        // 获取电影详细信息
-        this.axios.get("http://127.0.0.1:3000/movie/selmovie")
-            .then(result=>{
-                // 显示在页面修改使用
-                this.movies=result.data
-                // 保存数据使用
-                this.moviess=result.data
-                // 页面分页显示初始化  this.showMovies
+
+
+
+    props:["mcs","ms"],
+    // 监听获取父元素传来的变量
+    watch: {
+       ms(){
+            //将父元素传进来的数组 遍历到data中
+           this. movies.splice(0,this. movies.length)
+           for(var m of this.ms){
+               this. movies.push(m)
+               this. moviess.push(m)
+           }
+
+
+                  // 页面分页显示初始化  this.showMovies
                 for(var i=this.page-1;i<12;i++){
                     this.showMovies[this.showMovies.length]=this.movies[i]
                 }
@@ -129,27 +135,17 @@ export default {
                 var x = new Set(this.values.sort());
                 this.values=x
 
-
-            })
-            // 获取电影类型名
-        this.axios.get("http://127.0.0.1:3000/movie/mclass")
-            .then(result=>{
-                this.mclass=result.data
-                
-        })
-
-    
-    
+       },
+       mcs(){
+            //    将父元素传进来的数组 遍历到data中
+            this.mclass.splice(0,this.mclass.length)
+            for(var m of this.mcs){
+                this.mclass.push(m)
+            }
+        }
     },
-    mounted() {
 
-    },   
     methods: {
-        //添加点击列表跳转二级页面lzy
-        jumpvideo(mid){
-            localStorage.setItem('mid',mid);
-            this.$router.push("/play")
-        },
         // 点击类型按钮触发事件
         selectiveType(e){
             // var sel=new Array();
@@ -208,7 +204,7 @@ export default {
                             this.movies=movie2
                         }
                         //当所选按钮大于2执行
-                    }else{this.$alert("最多选中两个类型哦")}
+                    }else{alert("最多选中两个类型哦")}
                     // 取消按钮后执行
                 }else{
                     e.target.classList.remove("addclass");
@@ -511,8 +507,6 @@ export default {
          margin-right:30px;
          cursor: pointer;
     }
-    .rightTitle span{font-size:15px}
-    .rightTitle i{font-size:20px;margin-right:5px}
     .D_hr{
         width:100%;
         height:2px;
@@ -595,9 +589,10 @@ export default {
     .catena_content>ul>li>div{display:flex;justify-content: space-between;margin:10px 0 20px;font-size: 12px;}
     .catena_content>ul>li>div p{font-size:14px}
     .catena_content>ul>li>div ul{display:flex;justify-content:space-between}
-    .catena_content>ul>li>div ul>li{margin: 0 3px 0;font-size:16px}
-    .catena_content>ul>li>div ul>li.icon-yan{color:#E1121F}
-    .catena_content>ul>li>div ul>li.icon-WatchEvent{color:#FFB102;}
+    .catena_content>ul>li>div ul>li{margin: 0 3px 0;}
+    .catena_content>ul>li>div ul>li.icon-liulan{color:#E1121F}
+    .catena_content>ul>li>div ul>li.icon-pingfen-{color:#FFB102;}
+    .catena_content>ul>li>div ul>li:last-child{color:#FFB102}
     .sort{width:25%;margin:40px auto 0;text-align:center;display:flex;justify-content: space-between;cursor:pointer;}
     .sort input{width: 20px;color: #fff;background: #16151b;text-align: center;cursor:text;outline: none}
     .sort input:hover{border:1px solid #2c3e50;}

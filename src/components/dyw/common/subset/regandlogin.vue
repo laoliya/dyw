@@ -1,6 +1,5 @@
 <template>
-<div class="backgroundImg">
-    
+<div  class="backgroundImg">
     <div class="content">
         <h2>登录表单</h2>
         <div class="container">
@@ -19,7 +18,7 @@
             <div class="rightContainer">
                 <h2>注册</h2>
                 <input type="text" :placeholder="accountPlaceholder" v-model="reguname" @focus="focushint" @blur="validation">
-                <input type="password" placeholder="密码" v-model="regupwd"  @focus="focushint">
+                <input type="text" placeholder="密码" v-model="regupwd"  @focus="focushint">
                 <input type="text" placeholder="邮箱" v-model="regmail">
                 <input type="text" placeholder="手机号" v-model="regphone">
                 <a href="javascript:;" @click="reg">注册</a>
@@ -50,15 +49,14 @@ export default {
                 var nreg=/^[a-zA-Z0-9]{3,10}$/
                 var preg=/^[a-zA-z0-9]{3,8}$/
                 if(!nreg.test(this.reguname)){
-                    this.$alert("用户名格式不正确，请检查输入");
+                    alert("用户名格式不正确，请检查输入");
                     return;
                 }else{
                 var url="user/userreg";
                  var data={reguname:this.reguname}
                 this.axios.post(url,this.qs.stringify(data)).then(result=>{
                     if(result.data.code==-1){
-                          this.$alert("已存在的用户名");
-                          this.isuname=false;
+                         alert("已存在的用户名");
                          return;
                     }else{
                     this.isuname=true;
@@ -69,21 +67,21 @@ export default {
         //注册
         reg(){
             if(!this.isuname){
-                this.$alert("请重新输入用户名");
+                alert("已存在的用户名");
                 return;
             }
             if(!this.reguname){
-                this.$alert("用户名不可为空");
+                alert('用户名不可为空');
                 return;
             }
             else if(!this.regupwd){
-                this.$alert("密码不可为空");
+                alert('密码不可为空');
                 return;
             }else if(!this.regmail){
-                this.$alert("邮箱不可为空");
+                alert('邮箱不可为空');
                 return;
             }else if(!this.regphone){
-                this.$alert("手机号不可为空");
+                alert('邮箱不可为空');
                 return;
             }
             var url="user/reg";
@@ -94,7 +92,7 @@ export default {
                 regphone:this.regphone
                 }
             this.axios.post(url,this.qs.stringify(data)).then(result=>{
-                this.$alert(result.data.msg);
+                alert(result.data.msg);
                 location.reload();
             });
         },
@@ -109,11 +107,11 @@ export default {
             // loginupwd:''
             ///111
             if(!this.loginuname){
-                this.$alert("用户名不可为空");
+                alert('用户名不可为空');
                 return;
             }
             else if(!this.loginupwd){
-                this.$alert("密码不可为空");
+                alert('密码不可为空');
                 return;
             }
             var url="user/login";
@@ -131,7 +129,7 @@ export default {
                     }
                     
                 }else{
-                    this.$alert("登录失败请重新输入");
+                    alert('登录失败请重新输入');
                 }
             })
         }

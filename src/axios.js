@@ -15,4 +15,3 @@ axios.defaults.baseURL="http://127.0.0.1:3000/"
 Vue.prototype.axios=axios
 //将qs注册到vue实例
 Vue.prototype.qs=qs;
-//
