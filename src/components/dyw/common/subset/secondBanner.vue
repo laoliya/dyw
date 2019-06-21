@@ -32,52 +32,21 @@
                 <li v-for="(item,index) of mytype" :key=index>{{item.cname}}</li>
             </ul>
         </div>  
-        <!-- 轮播部分 -->
-        <!-- <div>{{movies}}</div> -->
-        <!-- <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                <div class="swiper-slide">Slide 4</div>
-                <div class="swiper-slide">Slide 5</div>
-            </div>
-        </div> -->
-
-
             <!-- Swiper -->
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                <div class="swiper-slide" v-for="(movie,index) of myMovies" :key=index>
-                        <img :src="'http://127.0.0.1:3000/img/'+movie.mimg" alt="">              
-                        <!--电影名称-->
-                        <h4>{{movie.mname}}</h4> 
-                        <div> <!--上映时间-->
-                            <p>{{movie.myear}}</p>
-                            <!--收藏  浏览  评分-->
-                            <div>
-                                <ul>
-                                    <li  class="iconfont icon-collection"></li>
-                                    <li  class="iconfont icon-liulan"></li>
-                                    <li  class="iconfont icon-pingfen-"></li>
-                                    <li>{{movie.mgrade}}</li>
-                                </ul>
-                            </div>
-                        </div>
+      <!-- Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper" v-if="movies">
+                <div class="swiper-slide" v-for="(item,index) of myMovies" :key="index">
+                    <img :src="'http://127.0.0.1:3000/img/'+item.mimg" alt="">
                 </div>
-                </div>
-                <!-- 轮播指示符  -->
-                <!-- <div class="swiper-pagination"></div> -->
 
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-            </div>
-            
-
-
-
-
-
+            </div>  
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
     </div>
 </template>
 
@@ -99,6 +68,26 @@ export default {
            for(var m of this.movies){
                this.myMovies.push(m)
            }
+
+            var swiper = new Swiper('.swiper-container', {
+                slidesPerView: 6,
+                spaceBetween: 20,
+                slidesPerGroup: 5,
+                loop: true,
+                loopedSlides: 47,
+                loopFillGroupWithBlank: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+               
+                observer: true, // 启动动态检查器(OB/观众/观看者)
+                observeParents: true // 修改swiper的父元素时，自动初始化swiper
+            });
        },
        mclass(){
             //    将父元素传进来的数组 遍历到data中
@@ -112,34 +101,26 @@ export default {
         // 单机类型触发事件
         selectiveType(){}
     },
-    mounted() {
+    mounted(){
 
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 6,
-            spaceBetween:20,
-            // pagination: {el: '.swiper-pagination',clickable: true,},/* */
-            /*左右按钮 */
-            navigation:{
-                prevEl:".swiper-button-prev",/*上一张 */
-                nextEl:".swiper-button-next",/*上一张 */
-            },
-            /*前进后退按钮 */
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        })
-
-        
+  
     },
 }
 </script>
 
 <style scoped>
-    .secondbanner{    
-        width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
+/*轮播*/
+.swiper-container{
+    margin-top:40px;
+}
+   .swiper-slide{
+       width:183px; 
+        border-radius:4px;
+   }
+   .swiper-slide img{width:100%}
+    /* 轮播结束 */
+    .secondbanner{
+        width:1200px;margin:0 auto;
     }
     .title{
         display:flex;
@@ -153,7 +134,6 @@ export default {
         height: 80px;
         line-height: 80px;
     }
-
     .leftTitle>h3{
         color:#fff;
         font-size:18px;
@@ -162,7 +142,8 @@ export default {
     .leftTitle i{
         margin-right:5px
     }
-    .rightTitle>ul{display:flex;justify-content:space-around;color:#65656D;font-size:14px;   } 
+    .rightTitle>ul{
+        display:flex;justify-content:space-around;color:#65656D;font-size:14px;   } 
     .rightTitle>ul>li{
          margin-right:30px;
          cursor: pointer;
@@ -189,51 +170,5 @@ export default {
         cursor:pointer;
     }
 
-/*轮播*/
-    .swiper-container {
-      width: 100%;
-      height: 100%;
-      padding-top:40px;
-    }
-    .swiper-slide {
-      text-align: center;
-      /* Center slide text vertically */
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
-      -webkit-box-pack: center;
-      -ms-flex-pack: center;
-      -webkit-justify-content: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      -webkit-align-items: center;
-      align-items: center;
-    }
-    /* 单个item的组件 */
-    .swiper-slide{
-        width:180px !important;
-        display: block !important;
-        margin-right: 20px !important;
-        cursor:pointer;
-    }
-    /* 轮播图片 */
-    .swiper-slide img{
-        width:100%;
-        width:100%;border-radius:3 px;transition: all 0.8s
-    }
-    .swiper-slide img:hover{transform:scale(1.1)}
-    .swiper-slide h4{color:#fff;margin:15px 0 10px;text-align: left;font-family:"宋体"}
-    .swiper-slide h4:hover{color:#FFFF58}
-    .swiper-slide div{display:flex;justify-content: space-between;margin:10px 0 20px;font-size: 12px;}
-    .swiper-slide ul{display:flex;justify-content:space-between}
-    .swiper-slide ul>li{margin: 0 3px 0;}
-    .swiper-slide p{font-size:14px;line-height:29px}
-    .swiper-container {
-        width:1200px;
-        /* height:329px;  */
-    }  
-    .swiper-button-next,.swiper-button-prev{top:45% !important}
-   
+
 </style>

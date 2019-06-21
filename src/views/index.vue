@@ -1,35 +1,35 @@
 <template>
-    <div>
-        <myheader></myheader>
-        <!-- 轮播图 -->
-        <banner
-            :movies=movies 
-            :mclass=mclass
-        ></banner>
-        <!-- 最近流行的 -->
-        <secondBanner 
-            :movies=movies 
-            :mclass=mclass
-        ></secondBanner>
-        <!-- 电影系列 -->
-        <catena
-            :ms=movies 
-            :mcs=mclass
-        ></catena>  
-    </div>
+<div>
+<myheader></myheader>
+<!-- 轮播图 -->
+<banner
+:movies=movies 
+:mclass=mclass
+></banner>
+<!-- 最近流行的 -->
+<secondBanner 
+:movies=movies 
+:mclass=mclass
+></secondBanner>
+<!-- 电影系列 -->
+<catena
+:ms=movies 
+:mcs=mclass
+></catena> 
+</div>
 </template>
 
 <script>
-import catena from "@/components/dyw/common/subset/catena";
-import secondBanner from "@/components/dyw/common/subset/secondBanner";
-import myheader from "@/components/dyw/common/header";
-import banner from "@/components/dyw/common/subset/banner";
-export default {
+    import catena from "@/components/dyw/common/subset/catena";
+    import secondBanner from "@/components/dyw/common/subset/secondBanner";
+    import myheader from "@/components/dyw/common/header";
+    import banner from "@/components/dyw/common/subset/banner";
+    export default {
     data(){
         return{
-        movies:[],
-        moviess:[],
-        mclass:[],//保存 存在的电影类型
+            movies:[],
+            moviess:[],
+            mclass:[],//保存 存在的电影类型
         }
     },
     components:{catena,secondBanner,myheader,banner},
@@ -45,8 +45,7 @@ export default {
         // 获取电影类型名
         this.axios.get("http://127.0.0.1:3000/movie/mclass")
             .then(result=>{
-                this.mclass=result.data
-                
+            this.mclass=result.data
         })
     },
 }

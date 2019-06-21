@@ -4,12 +4,27 @@
         <div class="navbar">
             <div class="content">
                 <!-- 左侧图片sss-->
-                <div class="leftContent">图片占位</div>
+                <div class="leftContent">
+                    <img src="//www.iqiyipic.com/common/fix/site-v4/sprite-headLogo-index.png" alt="">
+                </div>
+                <!-- 搜索框 -->
+                <div class="search">
+                    <div class="search-input">
+                        <input type="text" placeholder="西游记">
+                    </div>
+                    <div class="search-ReSou">
+                        <span>热搜榜</span>
+                    </div>
+                    <div class="search-btn">
+                        <i class="iconfont icon-sousuo"></i>
+                        <div>搜一下</div>
+                    </div>
+                </div>
                 <!-- 右侧图片 -->
                 <ul class="rightContent">
-                    <li class="dot">首页<div class="hover"></div></li>
-                    <li class="dot">电影<div class="hover"></div></li>
-                    <li class="dot">系列<div class="hover"></div></li>
+                    <li class="dot">VIP<div class="hover"></div></li>
+                    <li class="dot">历史<div class="hover"></div></li>
+                    <li class="dot">收藏<div class="hover"></div></li>
                     <li class="mylogin">我的 <i class="iconfont icon-Group-"></i> 
                     <!-- 下拉选二选一进行显示 -->
                         <div class="dropDown" v-if="code==-1"> 
@@ -22,8 +37,7 @@
                             <a @click="outlogin">退出登录</a>
                         </div>
                     </li>
-                    <li><i class="iconfont icon-sousuo"> </i> </li>
-                    <li><i class="iconfont icon-lingdang"> </i></li>
+               
                 </ul>
             </div>
         </div>
@@ -46,19 +60,13 @@ export default {
         this.load();
     },
     methods:{
-        // play(){
-        //     this.$router.push("/play")
-        // },
         login(){
-            console.log(1);
             this.$router.push("/regandlogin")
         },
         // 加载个人信息,判断是否登录
         load(){
             var url="user/myload"
-            // var obj={ids:-1}
             this.axios.get(url,{
-                // params:obj
             }).then(result=>{
                 this.code=result.data.code;
                 if(this.code==1){
@@ -90,6 +98,7 @@ export default {
         }
     },
     mounted() {
+        // 绑定window监听滚轮事件
         window.addEventListener('scroll', this.handleScroll)
     },
 
@@ -97,6 +106,86 @@ export default {
 }
 </script>
 <style scoped>
+
+/*搜索部分*/
+    .search{
+        display: flex;
+        height: 41px;
+        font-size: 16px;
+    }
+    /* 输入框 */
+    .search-input{width:372px;}
+    .search:hover input{
+        background:#444444;
+        color:#ccc
+    }
+    .search:hover .search-ReSou{
+        background:#444444;  
+    }
+    .search-ReSou:hover{
+        color:#00BE06
+    }
+    .search-input>input{
+        width: 100%;
+        height:100%;
+        border: 0;
+        outline: 0;
+        box-sizing:border-box;
+        padding: 11px 0;
+        border-radius: 21px 0 0 21px;
+        background-color:#333;
+        padding: 10px 5px 10px 26px;
+        color: #999;
+        font-family: Microsoft Yahei;
+    }
+    /* 热搜榜 */
+    .search-ReSou{
+        background-color:#333;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .search-ReSou>span{
+        line-height: 41px;
+        box-sizing:border-box;
+        padding: 10px;
+    }
+    /* 搜索按钮 */
+    .search-btn{
+        width: 96px;
+        background:#00be06 !important;
+        display: flex;
+        color:#fff;
+        border-radius:0 21px 21px 0;
+        text-indent: 5px;
+    }
+    .search-btn>div{
+        color: #fff;
+        line-height: 39px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-left: -6px;
+    }
+    .search-btn>i{
+        font-size: 24px;
+        line-height: 44px;
+        color: #fff;
+        text-indent: 10px;
+        cursor: pointer;
+    }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
     .bg{background:rgba(0,0,0,0.4)}
     .navbar {
         position:fixed;
@@ -105,9 +194,11 @@ export default {
         height: 70px;
         align-content: center;
         z-index: 1000;
+        background:rgba(255,255,255,.14);
+        box-shadow: 0 0 0 0 #000;
     }
     .content {
-        width: 1200px;
+        width:100%;
         height: 100%;
         margin: 0 auto;
         font-family: "微软雅黑";
@@ -117,13 +208,11 @@ export default {
         display: flex;
         justify-content: space-between
     }
-    /* .leftContent {
-        /* display: flex; */
-        /* font-size: 25px; */
-       
-    
+    .leftContent{margin-left: 100px;}
+    .leftContent img{width:110px}
     .rightContent {
         float: left;
+        margin-right: 10px;
     }
     .rightContent::before{
         content:"";
@@ -135,6 +224,13 @@ export default {
         float:left;
         margin-right:30px
     }
+
+    /* 搜索按钮区域 */
+    /* .search-btn{} */
+
+
+
+
     .hover {
         height:10px;
         width:10px;

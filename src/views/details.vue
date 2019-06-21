@@ -1,25 +1,22 @@
 <template>
     <div>
-        <div>{{this.movie}}</div>
-        <div>当前是详情页</div>
+        <!-- 播放器部分 -->
+        <play></play>
     </div>
 </template>
 
 <script>
+import play from "@/components/dyw/common/subset/play";
 export default {
-    return(){
-        data:{
-            movie:""
+    data(){
+        return{
         }
     },
-    created(){
-       this.movie=this.$route.query.movie
-    //    console.log(this.movie)
-    }
+    components:{play},
+
 }
 </script>
 
 <style>
 
 </style>
-
