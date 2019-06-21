@@ -7,7 +7,7 @@
             <div class="leftContainer">
                 <h2>登录</h2>
                 <input type="text" placeholder="用户名" v-model="loginuname"  autofocus>
-                <input type="text" placeholder="密码" v-model="loginupwd">
+                <input type="password" placeholder="密码" v-model="loginupwd">
                 <a href="javascript:;" @click="login">登录</a>
                 <p>其他方式登录</p>
                 <div>
@@ -145,13 +145,14 @@ export default {
         font-weight: 500;
     }
     .backgroundImg {
-        background-image: url("../assets/background.jpg");
-        background-size: 100% 100%;
+        /* background-image: url("../assets/background.jpg"); */
+        /* background-size: 100% 100%; */
         height: 100%;
+        background-color: #ccc;
         position: fixed;
         width: 100%;
         z-index: -1; 
-    } 
+    }  
    .content {
         color: white;
         padding-top:5%; 

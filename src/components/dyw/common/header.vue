@@ -5,7 +5,7 @@
             <div class="content">
                 <!-- 左侧图片sss-->
                 <div class="leftContent">
-                    <img src="//www.iqiyipic.com/common/fix/site-v4/sprite-headLogo-index.png" alt="">
+                    <img src="http://www.iqiyipic.com/common/fix/site-v4/sprite-headLogo-index.png" alt="">
                 </div>
                 <!-- 搜索框 -->
                 <div class="search">
@@ -92,6 +92,7 @@ export default {
             var navbar=document.querySelector(".navbar")
                 if(scrollTop>200){               
                     navbar.classList.add("bg")
+                    console.log("添加样式")
                 }else{
                     navbar.classList.remove("bg")
                 }
@@ -186,7 +187,7 @@ export default {
 
 
 
-    .bg{background:rgba(0,0,0,0.4)}
+    .bg{background:#232325 !important}
     .navbar {
         position:fixed;
         top: 0;
@@ -212,7 +213,9 @@ export default {
     .leftContent img{width:110px}
     .rightContent {
         float: left;
-        margin-right: 10px;
+        height: 35px;
+        margin-top: 10px;
+        margin-right: 20px;
     }
     .rightContent::before{
         content:"";
@@ -257,7 +260,7 @@ export default {
         position: absolute;
         right: -67%;
         top: 60%;
-        margin-top: 3px;
+        margin-top: 10px;
         display: none;
 
     }
