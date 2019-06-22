@@ -122,7 +122,7 @@ export default {
             type: 'video/webm'
             }],
             // poster: "../../static/images/test.jpg", //你的封面地址
-            poster: "http://127.0.0.1:3000/img/1.mp4", //你的封面地址
+            poster: "http://127.0.0.1:3000/img/banner1.jpg", //你的封面地址
             // width: document.documentElement.clientWidth,
             notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
             controlBar: {
@@ -269,6 +269,7 @@ export default {
         background-color: #2E2E36;
         color: #ccc;
         padding-top: 50px;
+        padding-bottom:10px;
     }
     .jumpIndex {
         position: absolute;

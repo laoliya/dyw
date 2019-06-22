@@ -2,7 +2,9 @@
     <div>
         <!-- 播放器部分 -->
         <play></play>
-        <youlike></youlike>
+        <youlike 
+        :movieList=movieList
+        ></youlike>
     </div>
 </template>
 
@@ -12,9 +14,16 @@ import youlike from "@/components/dyw/common/subset/youlike"
 export default {
     data(){
         return{
+            movieList:[]  //供我喜欢组件使用的数据
         }
     },
-    components:{play,youlike}
+    components:{play,youlike},
+    created(){
+        let url='list/listall';
+        this.axios.get(url).then(result=>{
+            this.movieList = result.data
+        })
+    }
 }
 </script>
 

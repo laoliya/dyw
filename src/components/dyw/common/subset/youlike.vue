@@ -10,12 +10,27 @@
                     <a href="javascript:;">换一换</a>
                 </div>
             </div>
+            <ul>
+                <li v-for="(item,index) of movieList" :key="index"> 
+                    {{item.mid}}
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 <script>
 export default {
-    
+    data(){
+        return {
+
+        }
+    },
+    props:['movieList'],
+    created(){
+        for(let i=0;i<this.movieList.length;i++){
+            console.log(this.movieList[0].mid+'11')
+        }
+    }
 }
 </script>
 <style scoped>

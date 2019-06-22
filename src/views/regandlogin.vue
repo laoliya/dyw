@@ -2,7 +2,7 @@
 <div class="backgroundImg">
     
     <div class="content">
-        <h2>登录表单</h2>
+        <h2 style="color:#00c806">登录表单</h2>
         <div class="container">
             <div class="leftContainer">
                 <h2>登录</h2>
@@ -125,7 +125,7 @@ export default {
                 if(result.data.code==1){
                    
                     if(result.data.is==0){
-                        this.$router.push("/play")
+                        this.$router.push("/details")
                     }else {
                         this.$router.push("/")
                     }
@@ -145,8 +145,8 @@ export default {
         font-weight: 500;
     }
     .backgroundImg {
-        /* background-image: url("../assets/background.jpg"); */
-        /* background-size: 100% 100%; */
+        background-image: url("../assets/background.jpg"); 
+        background-size: 100% 100%;
         height: 100%;
         background-color: #ccc;
         position: fixed;
@@ -212,7 +212,9 @@ export default {
        color: #CCCCCC;
    }
    .container a:hover {
-       border: 1px solid white;
+       border: 1px solid #00c806;
+       background-color: #00c806;
+       color: white;
    }
    .rightContainer {
        border-left: 1px solid #DDD;
