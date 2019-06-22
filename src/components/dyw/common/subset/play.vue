@@ -265,7 +265,7 @@ export default {
 <style scoped>
     .parent {
         width: 100%;
-        height: 1080px;
+        /* height: 100px; */
         background-color: #2E2E36;
         color: #ccc;
         padding-top: 50px;
