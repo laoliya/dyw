@@ -2,19 +2,19 @@
 <div class="backgroundImg">
     
     <div class="content">
-        <h2 style="color:#00c806">登录表单</h2>
+        <h2 style="color:#00c806">欢迎登录</h2>
         <div class="container">
             <div class="leftContainer">
                 <h2>登录</h2>
                 <input type="text" placeholder="用户名" v-model="loginuname"  autofocus>
                 <input type="password" placeholder="密码" v-model="loginupwd">
                 <a href="javascript:;" @click="login">登录</a>
-                <p>其他方式登录</p>
+                <!-- <p>其他方式登录</p>
                 <div>
                     <img src="" alt=""><span>QQ</span>
                     <img src="" alt=""><span>微信</span>
                     <img src="" alt=""><span>微博</span>
-                </div>
+                </div> -->
             </div>
             <div class="rightContainer">
                 <h2>注册</h2>
@@ -25,7 +25,7 @@
                 <a href="javascript:;" @click="reg">注册</a>
             </div>
         </div>
-        <p style="margin-top:100px;color:#CCC;">Copyright © 济南F4</p>
+        <p style="margin-top:100px;color:#CCC;">Copyright © 济南</p>
     </div>
 </div>
 </template>
@@ -100,7 +100,7 @@ export default {
         },
         //提示用户输入正确的用户名
         focushint(){
-            this.accountPlaceholder="最少3位最大10位的合法字母或者数字";
+            this.accountPlaceholder="最少3位最大10位";
         },
         //登录
         login(){
@@ -221,5 +221,39 @@ export default {
        padding-left: 40px;
        padding-right: 0;
    }
-    
+   @media screen and (min-width: 992px) {
+       
+   }
+    @media screen and (max-width:991px){
+        h2 {
+            font-size: 30px;
+        }
+        .container{
+            color: red;
+            width: 60%;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container h2 {
+            font-size:  20px;
+        }
+        .container input {
+            font-size:  10px;
+        }
+        .leftContainer {
+            padding-right: 0;
+            align-items: center;
+        }
+        .rightContainer {
+            margin-top: 20px;
+            border:0; 
+            padding-left: 0;
+            border-top: 1px solid #00c806;
+            align-items: center;
+
+        }
+        .rightContainer h2 {
+            margin-top: 30px;
+        }
+    }
 </style>

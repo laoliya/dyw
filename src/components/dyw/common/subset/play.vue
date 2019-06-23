@@ -2,7 +2,7 @@
     <div class="parent" >
         <!-- <v-chart :options="option" :autoresize="true" v-loading="loading"></v-chart> -->
         <!-- 回首页 -->
-        <div class="jumpIndex"><a href="">回首页</a></div>
+        
         <div class="movieContent">
             <div class="leftMovie" >
                 <!-- <video src="../../../../img/蜘蛛侠：英雄远征[预告片].mp4" controls autoplay  class="video" @click=" PlayToSuspend"  ></video>
@@ -19,13 +19,13 @@
             </div>
             <div class="rightContent">
                 <div class="upContent">
-                    <div class="dynameleft"><i class="iconfont icon-vip" ></i><a href="javascript:;">{{mname}}</a></div>
+                    <div class="dynameleft"><i class="iconfont iconvip" ></i><a href="javascript:;">{{mname}}</a></div>
                     <div class="dynameright"><a href="javascript:;"><i class="iconfont icon-xin"></i></a></div>
                 </div>
                 <div class="downContent">
                     <div class="downUp">
                         <a href="javascript:;">
-                            <i class="iconfont icon-wujiaoxing"></i>
+                            <i class="iconfont icontubiaozhizuomoban"></i>
                             <span>畅享活动 优惠续费VIP会员</span>
                             <span class="vipJK" style="font-size:12px">VIP季卡40元</span>
                         </a>

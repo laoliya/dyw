@@ -25,7 +25,7 @@
                     <li class="dot">VIP<div class="hover"></div></li>
                     <li class="dot">历史<div class="hover"></div></li>
                     <li class="dot">收藏<div class="hover"></div></li>
-                    <li class="mylogin">我的 <i class="iconfont icon-Group-"></i> 
+                    <li class="mylogin">我的 <i class="iconfont iconxia"></i> 
                     <!-- 下拉选二选一进行显示 -->
                         <div class="dropDown" v-if="code==-1"> 
                             <a  @click="login">请先登录</a>
