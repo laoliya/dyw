@@ -14,21 +14,21 @@
                <li style="width:220px;"  v-for="(item,index) of this.newListArr" :key="index">
                    <div class="cartcontainer">
                        <div class="leftpoto">
-                           <img  src="http://127.0.0.1:3000/img/大人物.jpg" alt="">
+                           <img  :src="'http://127.0.0.1:3000/img/'+item.mimg" alt="">
                            <div >
                                <span><i class="iconfont iconvip" ></i></span>
-                               <span>02.25.25</span>
-                               <span>8.1</span>
+                               <span>{{item.mlength}}</span>
+                               <span>{{item.mgrade}}</span>
                            </div>
                            <!-- hover时显示的卡片 start-->
                            <div class="flaotcat">
                                <div>
-                                   <img  src="http://127.0.0.1:3000/img/大人物.jpg" alt="">
+                                   <img  :src="'http://127.0.0.1:3000/img/'+item.mimg" alt="">
                                </div>
                                <div>
-                                   <!-- <span>{{item.mid}}</span> -->
-                                   <span>奉孝刚</span>
-                                   <span>简介</span>
+                                   <span>{{item.mname}}</span>
+                                   <span>{{item.aprotagonist}}</span>
+                                   <!-- <span>简介</span> -->
                                    <div>
                                        <a href="javascript:;">立即观看</a>
                                        <div>
@@ -41,8 +41,8 @@
                            <!-- hover时显示的卡片 end-->
                        </div>
                        <div class="bottomfont">
-                           <span>{{}}</span>
-                           <span>一个母亲的反击</span>
+                           <span>{{item.mname}}</span>
+                           <span>{{item.mdetail}}</span>
                        </div>
                    </div>
                </li>
@@ -56,32 +56,16 @@
 export default {
     data(){
         return {
-            newListArr:[] 
+            newListArr:[1,2] 
         }
     },
     props:['movieList'],
-    created(){
-        // console.log(this.movieList);
-        // this.newListArr.splice(0,this.newListArr.length)
-        // for(var i of this.movieList){
-        //     this.newListArr.push(i)
-        // }
-            // for (let i=0;i<10;i++) {
-            //     this.newListArr[i]=this.movieList[i];
-            // } 
-            // console.log(this.movieList);
-            // console.log(this.newListArr);
-            // console.log("did")
-            // console.log(this.newListArr);
-    },
     watch:{
         movieList(){
+            this.newListArr.splice(0,this.newListArr.length)
             for (let i=0;i<8;i++) {
-                this.newListArr[i]=this.movieList[i];
+                  this.newListArr.push(this.movieList[i]); 
             }
-            console.log('watch');
-            console.log(this.movieList);
-            console.log(this.newListArr);
         }
         
     },
@@ -95,8 +79,7 @@ export default {
     }
     /* 内容区域 */
     .content {
-        width: 1200px;
-        margin: 0 auto;
+        width: 800px;
     }
     /* 猜你喜欢 */
     .cailike {
@@ -168,8 +151,12 @@ export default {
         font-size: 13px;
     }
     .bottomfont>span:last-child {
+        width: 100%;
         margin-top: 10px;
         color: #888;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     /* hover时显示卡片start */
     .flaotcat {
@@ -230,7 +217,6 @@ export default {
          line-height: 35px;
      }
      .flaotcat>div:last-child>div>a{
-         border: 1px solid red;
          width: 100px;
          height: 33px;
          line-height: 33px;

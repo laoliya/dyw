@@ -1,31 +1,43 @@
 <template>
-    <div>
+    <div style="background-color:#FFFFFF;">
         <!-- 播放器部分 -->
         <play></play>
-        <youlike 
-        :movieList=movieList
-        ></youlike>
+        <div class="likeandup">
+            <youlike 
+                :movieList=movieList
+            ></youlike>
+             <!-- 引入右侧最近更新 -->
+            <recentupdates></recentupdates>
+        </div>
     </div>
 </template>
 
 <script>
 import play from "@/components/dyw/common/subset/play";
-import youlike from "@/components/dyw/common/subset/youlike"
+import youlike from "@/components/dyw/common/subset/youlike";
+import recentupdates from "@/components/dyw/common/subset/recentupdates";
 export default {
     data(){
         return{
             movieList:[]  //供我喜欢组件使用的数据
         }
     },
-    components:{play,youlike},
+    components:{play,youlike,recentupdates},
     created(){
         let url='list/listall';
         this.axios.get(url).then(result=>{
             this.movieList = result.data
+            // console.log(this.movieList);
         })
     }
 }
 </script>
 
 <style scoped>
+    .likeandup{
+        width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+    }
 </style>

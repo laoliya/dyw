@@ -268,7 +268,7 @@ export default {
         /* height: 100px; */
         background-color: #2E2E36;
         color: #ccc;
-        padding-top: 50px;
+        padding-top: 70px;
         padding-bottom:10px;
     }
     .jumpIndex {
