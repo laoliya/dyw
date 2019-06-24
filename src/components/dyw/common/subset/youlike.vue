@@ -63,7 +63,7 @@ export default {
     watch:{
         movieList(){
             this.newListArr.splice(0,this.newListArr.length)
-            for (let i=0;i<8;i++) {
+            for (let i=0;i<6;i++) {
                   this.newListArr.push(this.movieList[i]); 
             }
         }
@@ -96,8 +96,10 @@ export default {
     .cartul {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-between;
     }
     .cartul>li {
+        width: 20px;
         margin-right: 20px;
         margin-top: 20px;
     }
@@ -241,4 +243,17 @@ export default {
          margin-right: 15px;
      }
      /* hover时显示卡片end */
+
+     /* 写媒体查询完成响应式 */
+    @media screen and (max-width: 1199px) {
+        .content {
+            width: 100%;
+        }
+    }
+    /* 写媒体查询完成响应式 */
+    @media screen and (max-width: 606px) {
+        .cartul>li {
+            margin: 0 auto;
+    }
+    }
 </style>

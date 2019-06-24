@@ -7,7 +7,7 @@
                 :movieList=movieList
             ></youlike>
              <!-- 引入右侧最近更新 -->
-            <recentupdates></recentupdates>
+            <recentupdates :movieList=movieList></recentupdates>
         </div>
     </div>
 </template>
@@ -39,5 +39,13 @@ export default {
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
+    }
+    /* 写媒体查询完成响应式 */
+    @media screen and (max-width: 1199px) {
+        .likeandup{
+        width: 80%;
+        margin: 0 auto;
+        
+    }
     }
 </style>
