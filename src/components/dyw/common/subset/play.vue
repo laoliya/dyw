@@ -20,7 +20,7 @@
             <div class="rightContent">
                 <div class="upContent">
                     <div class="dynameleft"><i class="iconfont iconvip" ></i><a href="javascript:;">{{mname}}</a></div>
-                    <div class="dynameright"><a href="javascript:;"><i class="iconfont icon-xin"></i></a></div>
+                    <div class="dynameright"><a href="javascript:;"><i class="iconfont iconxin"></i></a></div>
                 </div>
                 <div class="downContent">
                     <div class="downUp">
@@ -55,7 +55,6 @@
                                     </div>
                                 </div>
                             </li>
-                            
                         </ul>
                     </div>
                 </div>
