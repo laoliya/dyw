@@ -14,7 +14,7 @@
             <div>说两句吧~</div>
             <div>
                 <div>
-                   <textarea name="" id="" cols="30" rows="10" class="inputtext" placeholder="说两句吧~"></textarea> 
+                   <textarea name="" id="" cols="3" rows="10" class="inputtext" placeholder="说两句吧~"></textarea> 
                 </div>
                 <div></div>
             </div>
@@ -93,6 +93,8 @@ export default {
        width: 100%;
        height: 104px;
        border: 2px solid #f0f0f0;
+        padding: 15px;
+        box-sizing: border-box;
     }
     .headeandin>div:last-child>div:last-child {
        border-top: 0;
@@ -105,7 +107,6 @@ export default {
        height: 100%;
        outline:none;
        border:none;
-       border-bottom: 2px solid #f0f0f0;
      
    }
 </style>
