@@ -11,11 +11,10 @@
         <!-- 头像和输入框 -->
         <div class="headeandin">
             <div><img src="http://127.0.0.1:3000/img/白蛇缘起.jpg" alt=""></div>
-            <div>说两句吧~</div>
-            <div>
+            <div v-show="isshow" @click="isshowdiv">说两句吧~</div>
+            <div v-show="isshow1">
                 <div>
-                   <textarea name="" id="" cols="3" rows="10" class="inputtext" placeholder="说两句吧~"></textarea> 
-                   
+                   <textarea id="inputId" autofocus class="inputtext"   placeholder="说两句吧~"></textarea> 
                 </div>
                 <div class="imgandcomments">
                     <div>
@@ -44,7 +43,7 @@
         </div>
         <!-- 评论内容区域 -->
         <ul class="comments">
-            <li>
+            <li v-for="(item,index) of li" :key="index">
                 <img class="comments-left" src="http://127.0.0.1:3000/img/白蛇缘起.jpg" alt="">
                 <div class="comments-right">
                     <p>
@@ -58,15 +57,29 @@
                         <span><i class="iconfont iconhuifu"></i>回复</span>
                     </div>
                 </div>
+                <div class="jubao"><i class="iconfont iconjinggao"></i><span>举报</span></div>
             </li>
         </ul>
+        <!-- //查看更多评论 -->
+        <div class="seemore">查看更多评论</div>
     </div>
 </template>
 <script>
 export default {
     data(){
-        return{}
+        return{
+            li:[1,2,3], //测试评论
+            isshow:true, //判断是否显示隐藏评论框
+            isshow1:false,
+        }
+    },
+    methods:{
+        isshowdiv(){
+           this.isshow=false; //判断是否显示隐藏评论框
+           this.isshow1=true;
+        }
     }
+    
 }
 </script>
 
@@ -132,7 +145,7 @@ export default {
         cursor: pointer;
         border: 2px solid #f0f0f0;
         text-align: left;
-        display: none;
+        /* display: none; */
     }
     .headeandin>div:last-child {
         width: 90%;
@@ -224,9 +237,8 @@ export default {
     .comments>li {
         display: flex;
         align-items: flex-start;
-        padding: 0 0 32px 0;
+        padding: 32px 0 32px 0;
         border-top:1px solid #f0f0f0;
-        border-bottom:1px solid #f0f0f0;
     }
     .comments-left {
         width: 50px;
@@ -242,6 +254,91 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        font-size: 12px;
+    }
+    .comments-right>p{
+        width: 100%;
+        display: flex;
+        align-items: flex-start;
+
+    }
+    .comments-right>p>a {
+        color: #fd0404;
+        font-weight: 600;
+    }
+    .comments-right>p>span{
+        color:red;
+    }
+    .comments-right>p>span {
+        margin-left: 20px;
+    }
+     .comments-right>p span:last-child{
+         color: #999;
+     }
+    .comments-right>div:first-child {
+        margin-top: 2px;
+        font-size: 14px;
+        color: #4b4b4b;
+        line-height: 24px
+    }    
+    .comments-right>div:last-child {
+        margin-top: 18px;
+        font-size: 12px;
+    }
+    .comments-right>div:last-child>span{
+        margin-right: 50px;
+        cursor: pointer;
+    }
+    .comments-right>div:last-child>span:hover{
+        color: #ff7900;
+    }
+    .comments-right>div:last-child>span>i {
+         font-size: 12px;
+    }
+    .comments>li{
+        position: relative;
+    }
+    .jubao{
+        display: none;
+        position: absolute;
+        right: 20%;
+        top: 20%;
+        line-height: 14px;
+        color: #adadad;
+        font-size: 14px;
+        padding-left: 18px;
+        z-index: 1;
+        cursor: pointer;
+    }
+    .jubao>i {
+        font-size: 14px;
+    }
+    .comments>li:hover .jubao {
+        display: block;
+            /*  */
+    }
+    .jubao:hover{
+        color: #ff7900;
+    }
+    .seemore {
+        width: 100%;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        background-color: #f0f0f0;
+        color: #adadad;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .seemore:hover {
+        background-color:#E6E5E5
+    }
+    /* 写媒体查询完成响应式 */
+    @media screen and (max-width: 1199px) {
+        .comment {
+            width: 90%;
+        }
+        
     }
 </style>
 
