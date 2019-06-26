@@ -1,22 +1,22 @@
 <template>
     <!-- 首页导航 -->
-    <div >
+    <div class="addCla max-class">
         <div class="navbar">
-            <div class="content">
+            <div class="content">   
                 <!-- 左侧图片sss-->
                 <div class="leftContent">
-                    <img src="http://www.iqiyipic.com/common/fix/site-v4/sprite-headLogo-index.png" alt="">
+                    <img @click="toHome" src="http://127.0.0.1:3000/img/Logo.png" alt="">
                 </div>
                 <!-- 搜索框 -->
                 <div class="search">
                     <div class="search-input">
-                        <input type="text" placeholder="西游记">
+                        <input  class="search-content" type="text" placeholder="西游记" @keydown="keySearch" v-model="searchContent" autofocus="autofocus">
                     </div>
                     <div class="search-ReSou">
                         <span>热搜榜</span>
                     </div>
                     <div class="search-btn">
-                        <i class="iconfont icon-sousuo"></i>
+                        <i class="iconfont iconsoushuo"></i>
                         <div>搜一下</div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@ export default {
             code:0,
             name:'',
             coll:'',
-
+            searchContent:""
         }
     },
     created(){
@@ -89,13 +89,31 @@ export default {
         // 绑定鼠标滚轮事件
         handleScroll () {
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            var addCla=document.querySelector(".addCla")
             var navbar=document.querySelector(".navbar")
-                if(scrollTop>200){               
-                    navbar.classList.add("bg")
+                if(scrollTop<200){               
+                    addCla.classList.add("max-class")
+                    navbar.classList.remove("bg")
                     console.log("添加样式")
                 }else{
-                    navbar.classList.remove("bg")
+                    addCla.classList.remove("max-class")
+                    navbar.classList.add("bg")
                 }
+        },
+        // 为输入框绑定键盘事件
+        keySearch(e){
+            if(e.keyCode==13){
+                console.log("触发键盘事件 触发提交按钮进行搜索")
+                this.submitSearch()
+            }
+        },
+        // 搜索
+        submitSearch(){
+            console.log(this.searchContent)
+        },
+        // 跳转至首页
+        toHome(){
+            this.$router.push("/")
         }
     },
     mounted() {
@@ -115,16 +133,16 @@ export default {
         font-size: 16px;
     }
     /* 输入框 */
-    .search-input{width:372px;}
-    .search:hover input{
+    .search-input{width:260px;}
+    .search:hover .search-content{
         background:#444444;
         color:#ccc
     }
     .search:hover .search-ReSou{
-        background:#444444;  
+         background:#444444;
     }
     .search-ReSou:hover{
-        color:#00BE06
+        color:#00BE06 !important;
     }
     .search-input>input{
         width: 100%;
@@ -167,27 +185,13 @@ export default {
         margin-left: -6px;
     }
     .search-btn>i{
-        font-size: 24px;
-        line-height: 44px;
-        color: #fff;
-        text-indent: 10px;
-        cursor: pointer;
+            font-size: 19px;
+    margin-right: 5px;
+    line-height: 44px;
+    color: #fff;
+    text-indent: 10px;
+    cursor: pointer;
     }
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-    .bg{background:#232325 !important}
     .navbar {
         position:fixed;
         top: 0;
@@ -209,8 +213,8 @@ export default {
         display: flex;
         justify-content: space-between
     }
-    .leftContent{margin-left: 100px;}
-    .leftContent img{width:110px}
+    .leftContent{margin-left: 100px; }
+    .leftContent img{width:110px;cursor: pointer;}
     .rightContent {
         float: left;
         height: 35px;
@@ -227,13 +231,8 @@ export default {
         float:left;
         margin-right:30px
     }
-
     /* 搜索按钮区域 */
     /* .search-btn{} */
-
-
-
-
     .hover {
         height:10px;
         width:10px;
@@ -289,7 +288,36 @@ export default {
     .dropDown a:hover{
         color: white;
     }
-
-
-
+    /* 滚轮后触发的样式 */
+    .bg{background:#232325 !important}
+    .max-class .search-input>input,
+    .max-class .search-ReSou
+        {background-color: rgba(255,255,255,0.2);color:#fff}
+    .max-class .search:hover .search-ReSou,
+    .max-class .search:hover .search-content
+        { background-color: rgba(255,255,255,0.3)}
+    .max-class .rightContent .dot,
+    .max-class .rightContent .mylogin{color:#ccc !important}
+    @media screen  and (max-width:996px) and (min-width:776px){
+            /*搜索部分*/
+        .search{
+            display: flex;
+            margin: 0 auto;
+            height: 41px;
+            font-size: 16px;
+        }
+        .leftContent{
+            margin-left: 30px;
+        }
+        .rightContent{display:none}
+    }
+    @media screen  and (max-width:776px){
+            /*搜索部分*/
+        .search{display: none}
+        .leftContent{margin-left:40px;}
+        .rightContent{display:none}
+        .navbar{background:#232325}
+    }
+    .iconxia{    font-size: 20px;
+    margin-left: 5px;}
 </style>

@@ -4,6 +4,7 @@ import index from "./views/index.vue"
 import details from "./views/details.vue"
 import regandlogin from './views/regandlogin'
 import douban from './views/douban'
+import particulars from './views/particulars'
 Vue.use(Router)
 
 export default new Router({
@@ -12,5 +13,6 @@ export default new Router({
     {path:'/regandlogin',component:regandlogin},
     {path:"/details",component:details},
     {path:"/douban",component:douban},
+    {path:"/particulars",component:particulars}
   ]
 })

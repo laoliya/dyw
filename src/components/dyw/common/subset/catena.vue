@@ -1,31 +1,7 @@
 <template>
+
     <div class="catena">
         <!--头部 -->
-        <div class="title">
-            <div class="leftTitle">
-                <h3>
-                    <i class="iconfont icon-bofang-"></i>
-                    电影系列
-                </h3>
-            </div>
-            <div class="rightTitle">
-                <ul>
-                    <li>
-                        <i class="iconfont icon-bofang-"></i>
-                        <span>系列</span>
-                    </li>
-                    <li>
-                        <i class="iconfont icon-duihao"></i>
-                        <span>原创</span>
-                    </li>
-                    <li>
-                        <i class="iconfont icon-sousuo"></i>
-                         <span>搜索</span>   
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="D_hr"></div>
         <!--导航  -->  
         <div class="catena_nav">
             <ul class="nav" @click="selectiveType">
@@ -47,9 +23,10 @@
                     </ul>
                 </div>
                 <div class="right_option">
-                    <i  class="iconfont icon-pingfen-"></i>
+                    <!-- <i  class="iconfont icon-pingfen-"></i>
                     <div>评分</div>
-                    <span>5.0</span>
+                    <span>5.0</span> -->
+                    <!-- <h2>TOP 10</h2> -->
                 </div>
             </div>
         </div>
@@ -57,29 +34,50 @@
         <div class="catena_content"> 
 
             <ul @click="GotoMDetail">
-                <li  v-for="(movie,index) of this.showMovies" :key=index @click="jumpvideo(movie.mid)">
-                    <!-- <router-link tag="a" :to="{path:'/play',query:{movie:movie}}"> -->
-                        <img :src="'http://127.0.0.1:3000/img/'+movie.mimg" alt="">                   
-                        <!--电影名称-->
-                        <h4>{{movie.mname}}</h4> 
-                    <!-- </router-link>     -->
-                        <div> <!--上映时间-->
-                            <p>{{movie.myear}}</p>
-                            <!--收藏  浏览  评分-->
-                            <div>
-                                <ul>
-                                    <li  class="iconfont icon-xin1"></li>
-                                    <li  class="iconfont icon-yan"></li>
-                                    <li  class="iconfont icon-WatchEvent"></li>
-                                    <li>{{movie.mgrade}}</li>
-                                </ul>
-                            </div>
+                <li class="hoverHid" v-for="(movie,index) of this.showMovies" :key=index @click="jumpvideo(movie.mid)">
+                    <div>
+                        <div>
+                            <img :src="'http://127.0.0.1:3000/img/'+movie.mimg" alt="">
                         </div>
-                   
+                        <!--电影名称-->
+                        <div class="movieName"> <!--上映时间-->
+                            <h4>{{movie.mname}}</h4> 
+                            <div>
+                                <p>{{movie.myear}}</p>
+                                <ul>
+                                    <li>
+                                        <p>{{movie.mgrade}}分</p>
+                                    </li>
+                                    <li class="iconfont iconicon-test"></li>
+                                    <!-- iconxinaixin 切换 -->
+                                </ul>
+                                
+                            </div>
+                            <!-- 隐藏部分  hover后显示 -->
+                        </div>
+                    </div>
+
                 </li>
     <!-- ul结束 -->
             </ul>
-        </div>      
+<!-- 右侧top10-->
+            <div class="rightC">
+                <ul>
+                    <li v-for="(movie,index) of mTop" :key="index">
+                        <h3>{{index+1}}</h3>
+                        <div>
+                            <h4>{{movie.mname}}</h4>
+                            <span>{{movie.mdetail}}</span>
+                        </div>
+                        <p>{{movie.mgrade}}</p>
+                    </li>
+                </ul>
+                <h1>
+                    <i class="iconfont iconhuo"></i>
+                    TOP 10</h1>
+            </div>
+        </div>    
+          <!--分页部分  -->
         <ul class="sort" @click="sort">   
             <li >首页</li>
             <li>上一页</li>
@@ -107,6 +105,7 @@ export default {
         values:[],//保存存在的年份
         yearSort:[],//保存为选中按钮的年份的电影
         selectedMovie:[],//保存当前已经通过上类型挑选按钮选中的电影
+        mTop:[]//获取当前电影排行前十
     }},
     props:["mcs","ms"],
     // 监听获取父元素传来的变量
@@ -118,10 +117,18 @@ export default {
                 this. movies.push(m)
                 this. moviess.push(m)
             }
-
+ 
+            // TOP10内容
+            this.mTop.splice(0,this. mTop.length)
+            for(var top of this.ms){
+                this.mTop.push(top)
+            }
+            this.mTop.sort((a,b)=>{return a.mgrade<b.mgrade?1:(a.mgrade>b.mgrade?-1:0)})
+            this.mTop=this.mTop.slice(0,10)
+            
 
             // 页面分页显示初始化 this.showMovies
-            for(var i=this.page-1;i<12;i++){
+            for(var i=this.page-1;i<8;i++){
                 this.showMovies[this.showMovies.length]=this.movies[i]
             }
             // 获取年份数组
@@ -249,11 +256,11 @@ export default {
                 }
 
                 // 将内容分页显示到页面当中
-                if(this.selectedMovie.length>12){
-                    for(var newm=0;newm<12;newm++){                       
+                if(this.selectedMovie.length>8){
+                    for(var newm=0;newm<8;newm++){                       
                         this.showMovies[this.showMovies.length]=this.selectedMovie[newm]
                     }
-                }else if(this.selectedMovie.length<12 && this.selectedMovie.length>=0){
+                }else if(this.selectedMovie.length<8 && this.selectedMovie.length>=0){
                     for(var newm=0;newm<this.selectedMovie.length;newm++){                       
                         this.showMovies[this.showMovies.length]=this.selectedMovie[newm]
                     }
@@ -300,11 +307,11 @@ export default {
 
                         this.showMovies.splice(0,this.showMovies.length)
                         // 将按照最新排序的电影分页显示
-                        if(this.movies.length>12){                            
-                            for(var newm=0;newm<12;newm++){   
+                        if(this.movies.length>8){                            
+                            for(var newm=0;newm<8;newm++){   
                                 this.showMovies[this.showMovies.length]=this.movies[newm]
                             }                           
-                        }else if(this.movies.length<12 && this.showMovies.length>=0){
+                        }else if(this.movies.length<8 && this.showMovies.length>=0){
                             for(var newm=0;newm<this.movies.length;newm++){   
                                 console.log(this.showMovies.length)                    
                                 this.showMovies[this.showMovies.length]=this.movies[newm]
@@ -317,11 +324,11 @@ export default {
                         this.movies=this.version
                         this.showMovies.splice(0,this.showMovies.length)
                         // 将按照最新排序的电影分页显示
-                        if(this.movies.length>12){                                                      
-                            for(var newm=0;newm<12;newm++){   
+                        if(this.movies.length>8){                                                      
+                            for(var newm=0;newm<8;newm++){   
                                 this.showMovies[this.showMovies.length]=this.movies[newm]
                             }                           
-                        }else if(this.movies.length<12 && this.showMovies.length>=0){
+                        }else if(this.movies.length<8 && this.showMovies.length>=0){
                             for(var newm=0;newm<this.movies.length;newm++){   
                                 console.log(this.showMovies.length)                    
                                 this.showMovies[this.showMovies.length]=this.movies[newm]
@@ -371,11 +378,11 @@ export default {
             
             this.showMovies.splice(0,this.showMovies.length)
             // 将内容分页显示到页面当中
-            if(this.movies.length>12){
-                for(var newm=0;newm<12;newm++){                       
+            if(this.movies.length>8){
+                for(var newm=0;newm<8;newm++){                       
                     this.showMovies[this.showMovies.length]=this.movies[newm]
                 }
-            }else if(this.movies.length<12 && this.movies.length>=0){
+            }else if(this.movies.length<8 && this.movies.length>=0){
                 for(var newm=0;newm<this.movies.length;newm++){                       
                     this.showMovies[this.showMovies.length]=this.movies[newm]
                 }
@@ -385,20 +392,20 @@ export default {
         // 分页查询按钮
         sort(e){
             // 获取总页数sum
-            var sum=(Math.ceil(this.movies.length/12))
+            var sum=(Math.ceil(this.movies.length/8))
             if(e.target.innerHTML=="首页"){
                 this.page=1;
                 this.showMovies.splice(0,this.showMovies.length)
                 var a=0;
-                if(this.movies.length<12){a=this.movies.length}else{a=12}
+                if(this.movies.length<8){a=this.movies.length}else{a=8}
                 for(var i=0;i<a;i++){
                     this.showMovies[this.showMovies.length]=this.movies[i]
                 }
             }else if(e.target.innerHTML=="末页"){
                 //input显示内容修改为最后一页
-                this.page=(Math.ceil(this.movies.length/12))
+                this.page=(Math.ceil(this.movies.length/8))
                 //末页开始插入的下标
-                var page=(this.page-1)*12
+                var page=(this.page-1)*8
                 this.showMovies.splice(0,this.showMovies.length)
                 // 循环在哪里开始page   循环至结尾
                 for(var i=page;i<this.movies.length;i++){
@@ -408,7 +415,7 @@ export default {
                 // 从哪里开始查询  
                 if(this.page>2){
                     this.page=this.page-1         
-                    var page=(this.page-1)*12-1     
+                    var page=(this.page-1)*8-1     
                 }
                 else{
                     if(this.page!=1){
@@ -416,7 +423,7 @@ export default {
                     }   
                     var page=0
                 }                
-                var a=page+12   //循环page+12次     
+                var a=page+8   //循环page+12次     
                 this.showMovies.splice(0,this.showMovies.length)
                 // // 循环在page开始   循环12个  非末页内容是装满的
                 for(var i=page;i<a;i++){
@@ -426,14 +433,14 @@ export default {
                 //点击按钮时当前页数不是末页才执行            
                 if(this.page<sum){
                     this.page=this.page+1;               
-                    var page=(this.page-1)*12-1;                     
-                    var a=page+12
+                    var page=(this.page-1)*8-1;                     
+                    var a=page+8
                     // 如果要切换到的是最后一页                    
                     if(this.page==sum){
-                        if(this.movies.length%12!=0){
-                            var a=this.movies.length%12+page
+                        if(this.movies.length%8!=0){
+                            var a=this.movies.length%8+page
                         }else{
-                            var a=page+12      
+                            var a=page+8      
                         }  
                     }
                     this.showMovies.splice(0,this.showMovies.length)
@@ -452,19 +459,19 @@ export default {
                         var page=0
                     }else{
                         if(this.page==2){
-                            var page=11
+                            var page=7
                         }else{
-                            var page=(this.page-1)*12-1;
+                            var page=(this.page-1)*8-1;
                         }                        
                     }
                     // 如果选择的是最后一页
                     if(this.page==sum){
-                        if(this.movies.length%12!=0){
-                            var a=page+(this.movies.length%12)
+                        if(this.movies.length%8!=0){
+                            var a=page+(this.movies.length%8)
                         }else{
-                            var a=page+12
+                            var a=page+8
                         }
-                    }else{var a=page+12}
+                    }else{var a=page+8}
                     this.showMovies.splice(0,this.showMovies.length)
                     for(var i=page;i<a;i++){
                         this.showMovies[this.showMovies.length]=this.movies[i];
@@ -478,7 +485,6 @@ export default {
         GotoMDetail(e){
             if(e.target.nodeName.toLowerCase()=="img" || e.target.nodeName.toLowerCase()=="h4"){
                 console.log(this.movie.mimg)
-                // this.$router.push({path:"/details",query{arry:}})
             }
         }
     }, 
@@ -487,39 +493,15 @@ export default {
 </script>
 
 <style scoped>
+.catena{    padding-bottom: 20px;}
+/* 实现自适应样式 */
+@media screen and (min-width:1200px){
     .catena{
         width:1200px;
         margin:0 auto;
-        padding:0 20px 40px;
     }
-    /* 标题部分 */
-    .title{
-        display:flex;
-        justify-content: space-between;
-        padding-top:20px;
-        height:80px;
-        line-height: 80px;
-    }
-    .leftTitle>h3{
-        color:#fff;
-        font-size:18px;
-        font-weight:0
-    }
-    .leftTitle i{
-        margin-right:5px
-    }
-    .rightTitle>ul{display:flex;justify-content:space-around;color:#65656D;font-size:14px;   } 
-    .rightTitle>ul>li{
-         margin-right:30px;
-         cursor: pointer;
-    }
-    .rightTitle span{font-size:15px}
-    .rightTitle i{font-size:20px;margin-right:5px}
-    .D_hr{
-        width:100%;
-        height:2px;
-        background:#292931
-    }
+
+
     /*导航部分*/
     .catena_nav{margin-top:40px;}
     .catena_nav .nav{
@@ -531,13 +513,14 @@ export default {
         width:120px;
         height:35px;
         color:#fff;
-        background:#1E1D23;
+        background: #00be06;
         border-radius:50px;
         line-height: 34px;
         cursor:pointer;
     }
     /* 动态添加的点击与否按钮样式 */
-    .addclass{background:#DA1622 !important;}        
+    .addclass{box-shadow: 0 0 15px 1px;background:#00be06 !important} 
+
         /* 导航下部分 */
     .catena_option{
         margin-top:30px;
@@ -548,12 +531,12 @@ export default {
         display:flex;
         justify-content:space-between;
     }
+    .left_option>P{margin-left:30px;color: #969698;}
     .left_option>ul>li{
         margin-left: 20px;
         width: 90px;
-        
         font-size: 14px;
-        background: #1E1D23;
+        background: #183a19;
                 /* 未选中状态#1E1D23 */
         color: #fff;
         border-radius: 50px;
@@ -574,33 +557,645 @@ export default {
     .disblock{
         height:233px !important        
     }
-
     .cyear>ul>li{background: rgba(0,0,0,0.9);padding: 5px 20px;height: 28px;}
     .cyear>ul>li:hover{color:#FFFF58}
     .cyear>ul>li +li{border-top:1px solid #444}
-    .cyear>ul>li:first-child{    border-radius:8px 8px 0px 0;}
-    .cyear>ul>li:last-child{    border-radius: 0px 0 8px 8px;}
+    .cyear>ul>li:first-child{border-radius:8px 8px 0px 0;}
+    .cyear>ul>li:last-child{border-radius: 0px 0 8px 8px;}
     /* 电影内容部分 */
     /*  照片宽高220x308 */
     .catena_content{
-        width:100%;
+        width:1200px;
         display:flex;
         justify-content: space-between;
-        margin-top:40px
+        margin-top:40px;
+        padding:0 20px 40px;
+
     }
-    .catena_content>ul::before{content:"";display: block;clear: both}
+    .catena_content>ul{width:800px}
+    .catena_content>ul::after{content:"";display: block;clear: both}
     .catena_content>ul>li{width:180px;float:left;margin-right:20px;cursor:pointer;}
-    .catena_content>ul>li img{width:100%;border-radius:10px;transition: all 0.8s}
+    .catena_content>ul>li img{width:180px;border-radius:2px;transition: all 0.8s}
     .catena_content>ul>li img:hover{transform:scale(1.1)}
-    .catena_content>ul>li h4{color:#fff;margin:15px 0 10px;text-align: left;font-family:"宋体"}
-    .catena_content>ul>li h4:hover{color:#FFFF58}
-    .catena_content>ul>li>div{display:flex;justify-content: space-between;margin:10px 0 20px;font-size: 12px;}
     .catena_content>ul>li>div p{font-size:14px}
     .catena_content>ul>li>div ul{display:flex;justify-content:space-between}
     .catena_content>ul>li>div ul>li{margin: 0 3px 0;font-size:16px}
-    .catena_content>ul>li>div ul>li.icon-yan{color:#E1121F}
-    .catena_content>ul>li>div ul>li.icon-WatchEvent{color:#FFB102;}
-    .sort{width:25%;margin:40px auto 0;text-align:center;display:flex;justify-content: space-between;cursor:pointer;}
-    .sort input{width: 20px;color: #fff;background: #16151b;text-align: center;cursor:text;outline: none}
+    /* 控制左侧电影详情显示隐藏 */
+    .hoverHid{position:relative}
+    .hid{display:none;
+        color:#fff;
+        position: absolute;
+        top:0;
+        width: 180px;
+        height: 100%;
+        border-radius: 2px;
+        -webkit-transition: all 0.8s;
+        transition: all 0.8s;
+        
+    }
+    /* 使用伪类添加高斯模糊以防作用到子元素中 */
+    .hid::before{
+        content:"";
+        background:rgb(0,0,0);
+        filter: blur(60px);
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        top:0;
+    }
+   /*右侧TOP10部分样式*/
+    .rightC{   
+        width:400px;
+        position:relative;
+    }
+    .rightC>h1{
+        position:absolute;
+        top: -28px;
+        left: 20px;
+        font-family: "宋体";
+        font-weight: 900;
+        font-size: 25px;
+        color: #d2cccb;
+    }
+    .rightC>ul{
+        /* border-radius: 15px; */
+        height: 550px;
+        margin-top: 12px;
+    }
+    .rightC>ul>li{
+        height: 10%;
+        cursor: pointer;
+    }
+    .rightC>ul>li+li{border-top: 1px solid #6e686838}
+    /* 排名序号 */
+    .rightC>ul>li>h3{    
+        float: left;
+        font-size: 27px;
+        width: 68px;
+        height: 100%;
+        line-height: 55px;
+        color:#cccccc59;
+        font-weight: 500;
+    }
+    .rightC>ul>li:nth-child(1)>h3,
+    .rightC>ul>li:nth-child(2)>h3,
+    .rightC>ul>li:nth-child(3)>h3
+        {   
+        font-size: 27px;
+        font-weight: 700;
+        background-image: -webkit-linear-gradient(bottom,red,#fd8403,yellow);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    /* 电影名称及简介 */
+    .rightC>ul>li>div{
+        float: left;
+        width:60%;
+    }
+    .rightC>ul>li>div:hover>h4{
+        color:#00be06 !important;
+    }
+    .rightC>ul>li>div>h4{
+        color:#a1b9a7;
+        text-indent: 8px;
+        padding-top: 7px;
+        text-align: left;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .rightC>ul>li:nth-child(1)>div>h4,
+    .rightC>ul>li:nth-child(2)>div>h4,
+    .rightC>ul>li:nth-child(3)>div>h4{
+        font-weight:700;
+        font-size: 23px;
+    }
+    .rightC>ul>li>div>span{
+        color:#f3f7f38f;
+        display: block;
+        font-size: 13px;
+        margin-top: 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .rightC>ul>li>p{ 
+        color:#c5a21fe0  ;
+        float: right;
+        height: 100%;
+        line-height: 55px;
+        margin-right: 20px;
+    }
+    .rightC>ul>li>p:hover{
+        color:#ffd400
+    }
+    .movieName{
+        font-size: 16px;
+    }
+    .movieName>div{
+        display:flex;justify-content: space-between;margin:10px 0 20px;
+    }
+    /* 左侧电影名称 */
+    .movieName h4{
+        color:#dfeae2;font-family:"宋体";text-overflow: ellipsis;text-align:left;
+    }
+    .movieName h4:hover{color:#00be06}
+    .movieName>div{color: #f3f7f38f;}
+   /*分页查询*/
+    .sort{
+        width:25%;
+        margin:40px auto 0;
+        text-align:center;
+        display:flex;
+        justify-content: space-between;
+        cursor:pointer;
+        color: #f3f7f38f;
+    }
+    .sort input{
+        width: 20px;
+        color: #fff;
+        background: #16151b;
+        text-align: center;
+        cursor:text;
+        outline: none
+    }
     .sort input:hover{border:1px solid #2c3e50;}
+};
+@media screen and (max-width:1199px) and (min-width:996px){
+      .catena{
+        width:100%;
+        margin:0 auto;
+    }
+    /*导航部分*/
+    .catena_nav{margin-top:40px;}
+    .catena_nav .nav{
+        display:flex;
+        width:100%;
+        justify-content: space-around;
+    }
+    .catena_nav .nav>li{
+        width:103px;
+        height:35px;
+        margin: 0 13px;
+        color:#fff;
+        background: #00be06;
+        border-radius:50px;
+        line-height: 34px;
+        cursor:pointer;
+    }
+    /* 动态添加的点击与否按钮样式 */
+    .addclass{box-shadow: 0 0 15px 1px;background:#00be06 !important} 
+
+        /* 导航下部分 */
+    .catena_option{
+        margin-top:30px;
+        height:30px;
+        line-height:28px;
+    }
+    .catena_option,.left_option,.right_option,.left_option>ul{
+        display:flex;
+        justify-content:space-between;
+    }
+    .left_option>P{margin-left:30px;color: #969698;}
+    .left_option>ul>li{
+        margin-left: 20px;
+        width: 90px;
+        font-size: 14px;
+        background: #183a19;
+                /* 未选中状态#1E1D23 */
+        color: #fff;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+
+    /* 下拉菜单 */
+    .cyear{position:relative}
+    #cyearList{
+        position: absolute;
+        top: 31px;
+        left:8px;
+        max-height:233px;
+        z-index:1000;
+        overflow:auto;
+        height:0;
+       transition: all .5s linear;
+    }
+    .disblock{
+        height:233px !important        
+    }
+    .cyear>ul>li{background: rgba(0,0,0,0.9);padding: 5px 20px;height: 28px;}
+    .cyear>ul>li:hover{color:#FFFF58}
+    .cyear>ul>li +li{border-top:1px solid #444}
+    .cyear>ul>li:first-child{border-radius:8px 8px 0px 0;}
+    .cyear>ul>li:last-child{border-radius: 0px 0 8px 8px;}
+    /* 电影内容部分 */
+    /*  照片宽高220x308 */
+    .catena_content{
+        width: 960px;
+        margin:0 auto;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        padding: 0 16px;
+    }
+    .catena_content>ul{width:740px}
+    .catena_content>ul::after{content:"";display: block;clear: both}
+    .catena_content>ul>li{width:165px;float:left;margin-right:20px;cursor:pointer;}
+    .catena_content>ul>li img{width:165px;border-radius:2px;transition: all 0.8s}
+    .catena_content>ul>li img:hover{transform:scale(1.1)}
+    .catena_content>ul>li>div p{font-size:14px}
+    .catena_content>ul>li>div ul{display:flex;justify-content:space-between}
+    .catena_content>ul>li>div ul>li{margin: 0 3px 0;font-size:16px}
+    /* 控制左侧电影详情显示隐藏 */
+    .hoverHid{position:relative}
+    .hid{display:none;
+        color:#fff;
+        position: absolute;
+        top:0;
+        width: 180px;
+        height: 100%;
+        border-radius: 2px;
+        -webkit-transition: all 0.8s;
+        transition: all 0.8s;
+        
+    }
+
+   /*右侧TOP10部分样式*/
+    .rightC{    
+        width: 220px;
+        position: relative;
+    }
+    .rightC>h1{
+        position:absolute;
+        top: -28px;
+        left: 20px;
+        font-family: "宋体";
+        font-weight: 900;
+        font-size: 25px;
+        color: #d2cccb;
+    }
+    .rightC>ul{
+        /* border-radius: 15px; */
+        height: 550px;
+        margin-top: 12px;
+    }
+    .rightC>ul>li{
+        height: 10%;
+        cursor: pointer;
+    }
+    .rightC>ul>li+li{border-top: 1px solid #6e686838}
+    /* 排名序号 */
+    .rightC>ul>li>h3{    
+        float: left;
+        font-size: 27px;
+        width: 35px;
+        height: 100%;
+        line-height: 55px;
+        color:#cccccc59;
+        font-weight: 500;
+    }
+    .rightC>ul>li:nth-child(1)>h3,
+    .rightC>ul>li:nth-child(2)>h3,
+    .rightC>ul>li:nth-child(3)>h3
+    {   
+        font-size: 27px;
+        font-weight: 700;
+        background-image: -webkit-linear-gradient(bottom,red,#fd8403,yellow);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    /* 电影名称及简介 */
+    .rightC>ul>li>div{
+        float: left;
+        width:60%;
+    }
+    .rightC>ul>li>div:hover>h4{
+        color:#00be06 !important;
+    }
+    .rightC>ul>li>div>h4{
+        color:#a1b9a7;
+        text-indent: 8px;
+        padding-top: 7px;
+        text-align: left;
+        font-size: 18px;
+        font-weight: 500;
+    }
+    .rightC>ul>li:nth-child(1)>div>h4,
+    .rightC>ul>li:nth-child(2)>div>h4,
+    .rightC>ul>li:nth-child(3)>div>h4{
+        font-weight: 600;
+        font-size: 15px;
+    }
+    .rightC>ul>li>div>span{
+        color:#f3f7f38f;
+        display: block;
+        font-size: 13px;
+        margin-top: 6px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .rightC>ul>li>p{ 
+        color:#c5a21fe0  ;
+        float: right;
+        height: 100%;
+        line-height: 55px;
+        margin-right: 20px;
+    }
+    .rightC>ul>li>p:hover{
+        color:#ffd400
+    }
+    .movieName{
+        font-size: 16px;
+    }
+    .movieName>div{
+        display:flex;justify-content: space-between;margin:10px 0 20px;
+    }
+    /* 左侧电影名称 */
+    .movieName h4{
+        color:#dfeae2;font-family:"宋体";text-overflow: ellipsis;text-align:left;
+    }
+    .movieName h4:hover{color:#00be06}
+    .movieName>div{color: #f3f7f38f;}
+   /*分页查询*/
+    .sort{
+        width:350px;
+        margin:40px auto 0;
+        text-align:center;
+        display:flex;
+        justify-content: space-between;
+        cursor:pointer;
+        color: #f3f7f38f;
+    }
+    .sort input{
+        width: 20px;
+        color: #fff;
+        background: #16151b;
+        text-align: center;
+        cursor:text;
+        outline: none
+    }
+    .sort input:hover{border:1px solid #2c3e50;}  
+}
+/* 中屏 */
+@media screen and (max-width:995px) and (min-width:768px){
+    .catena{
+        width:100%;
+        margin:0 auto;
+    }
+    /*导航部分*/
+    .catena_nav{margin-top:40px;}
+    .catena_nav .nav{
+        display:flex;
+        width:100%;
+        justify-content: space-around;
+    }
+    .catena_nav .nav>li{
+        width:103px;
+        height:35px;
+        margin: 0 13px;
+        color:#fff;
+        background: #00be06;
+        border-radius:50px;
+        line-height: 34px;
+        cursor:pointer;
+    }
+    /* 动态添加的点击与否按钮样式 */
+    .addclass{box-shadow: 0 0 15px 1px;background:#00be06 !important} 
+
+        /* 导航下部分 */
+    .catena_option{
+        margin-top:30px;
+        height:30px;
+        line-height:28px;
+    }
+    .catena_option,.left_option,.right_option,.left_option>ul{
+        display:flex;
+        justify-content:space-between;
+    }
+    .left_option>P{margin-left:30px;color: #969698;}
+    .left_option>ul>li{
+        margin-left: 20px;
+        width: 90px;
+        font-size: 14px;
+        background: #183a19;
+                /* 未选中状态#1E1D23 */
+        color: #fff;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+
+    /* 下拉菜单 */
+    .cyear{position:relative}
+    #cyearList{
+        position: absolute;
+        top: 31px;
+        left:8px;
+        max-height:233px;
+        z-index:1000;
+        overflow:auto;
+        height:0;
+       transition: all .5s linear;
+    }
+    .disblock{
+        height:233px !important        
+    }
+    .cyear>ul>li{background: rgba(0,0,0,0.9);padding: 5px 20px;height: 28px;}
+    .cyear>ul>li:hover{color:#FFFF58}
+    .cyear>ul>li +li{border-top:1px solid #444}
+    .cyear>ul>li:first-child{border-radius:8px 8px 0px 0;}
+    .cyear>ul>li:last-child{border-radius: 0px 0 8px 8px;}
+    /* 电影内容部分 */
+    /*  照片宽高220x308 */
+    .catena_content{
+        width: 768px;
+        margin:0 auto;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 40px;
+        padding: 0 16px;
+    }
+    .catena_content>ul{width:768px}
+    .catena_content>ul::after{content:"";display: block;clear: both}
+    .catena_content>ul>li{width:165px;float:left;margin-right:20px;cursor:pointer;}
+    .catena_content>ul>li img{width:165px;border-radius:2px;transition: all 0.8s}
+    .catena_content>ul>li img:hover{transform:scale(1.1)}
+    .catena_content>ul>li>div p{font-size:14px}
+    .catena_content>ul>li>div ul{display:flex;justify-content:space-between}
+    .catena_content>ul>li>div ul>li{margin: 0 3px 0;font-size:16px}
+    /* 控制左侧电影详情显示隐藏 */
+    .hoverHid{position:relative}
+    .hid{display:none;
+        color:#fff;
+        position: absolute;
+        top:0;
+        width: 180px;
+        height: 100%;
+        border-radius: 2px;
+        -webkit-transition: all 0.8s;
+        transition: all 0.8s;
+        
+    }
+    /* 左侧top10隐藏 */
+    .rightC{display:none}
+    .movieName{
+        font-size: 16px;
+    }
+    .movieName>div{
+        display:flex;justify-content: space-between;margin:10px 0 20px;
+    }
+    /* 左侧电影名称 */
+    .movieName h4{
+        color:#dfeae2;font-family:"宋体";text-overflow: ellipsis;text-align:left;
+    }
+    .movieName h4:hover{color:#00be06}
+    .movieName>div{color: #f3f7f38f;}
+   /*分页查询*/
+    .sort{
+        width:350px;
+        margin:40px auto 0;
+        text-align:center;
+        display:flex;
+        justify-content: space-between;
+        cursor:pointer;
+        color: #f3f7f38f;
+    }
+    .sort input{
+        width: 20px;
+        color: #fff;
+        background: #16151b;
+        text-align: center;
+        cursor:text;
+        outline: none
+    }
+    .sort input:hover{border:1px solid #2c3e50;}  
+}
+/* 小屏 */
+@media screen and (max-width:767px){
+    .catena{
+        width:100%;
+        margin:0 auto;
+    }
+    /*导航部分*/
+    .catena_nav{margin-top:40px;}
+    .catena_nav .nav{
+        width:100%;
+    }
+    .nav::after{content:"";display: block;clear: both;}
+    .catena_nav .nav>li{
+        width: 18%;
+        float: left;
+        height: 35px;
+        margin: 3px 13px;
+        color: #fff;
+        background: #00be06;
+        border-radius: 50px;
+        line-height: 34px;
+        cursor: pointer;
+    }
+    /* 动态添加的点击与否按钮样式 */
+    .addclass{box-shadow: 0 0 15px 1px;background:#00be06 !important} 
+
+        /* 导航下部分 */
+    .catena_option{
+        margin-top:10px;
+        height:30px;
+        line-height:28px;
+    }
+    .catena_option,.left_option,.right_option,.left_option>ul{
+        display:flex;
+        justify-content:space-between;
+    }
+    .left_option>P{    margin-left: 18px;color: #969698;}
+    .left_option>ul>li{
+        margin-left: 10px;
+        width: 60px;
+        font-size: 14px;
+        background: #183a19;
+        /* 未选中状态#1E1D23 */
+        color: #fff;
+        border-radius: 50px;
+        cursor: pointer;
+    }
+
+    /* 下拉菜单 */
+    .cyear{position:relative}
+    #cyearList{
+        position: absolute;
+        top: 31px;
+        left:8px;
+        max-height:233px;
+        z-index:1000;
+        overflow:auto;
+        height:0;
+       transition: all .5s linear;
+    }
+    .disblock{
+        height:233px !important        
+    }
+    .cyear>ul>li{background: rgba(0,0,0,0.9);padding: 5px 20px;height: 28px;}
+    .cyear>ul>li:hover{color:#FFFF58}
+    .cyear>ul>li +li{border-top:1px solid #444}
+    .cyear>ul>li:first-child{border-radius:8px 8px 0px 0;}
+    .cyear>ul>li:last-child{border-radius: 0px 0 8px 8px;}
+    /* 电影内容部分 */
+    /*  照片宽高220x308 */
+    .catena_content{
+        width: 100%;
+        margin:0 auto;
+        margin-top: 20px;
+        padding: 0 16px;
+    }
+    .catena_content>ul{
+        width:100%;        
+    }
+    .catena_content>ul::after{content:"";display: block;clear: both}
+    .catena_content>ul>li{width:43%;float:left;margin-right:20px;cursor:pointer;overflow:hidden}
+    .catena_content>ul>li img{width:100%;border-radius:2px;transition: all 0.8s}
+    .catena_content>ul>li img:hover{transform:scale(1.1)}
+    .catena_content>ul>li>div p{font-size:14px}
+    .catena_content>ul>li>div ul{display:flex;justify-content:space-between}
+    .catena_content>ul>li>div ul>li{margin: 0 3px 0;font-size:16px}
+    /* 控制左侧电影详情显示隐藏 */
+    .hoverHid{position:relative;width:45%;}
+    .hoverHid>div{width:100%;margin: 0 auto;}    
+    /* 左侧top10隐藏 */
+    .rightC{display:none}
+    .movieName{
+        font-size: 16px;
+    }
+    .movieName>div{
+        display:flex;justify-content: space-between;margin:10px 0 20px;
+    }
+    /* 左侧电影名称 */
+    .movieName h4{
+        color:#dfeae2;font-family:"宋体";text-overflow: ellipsis;text-align:left;
+    }
+    .movieName h4:hover{color:#00be06}
+    .movieName>div{color: #f3f7f38f;}
+   /*分页查询*/
+    .sort{
+        width:350px;
+        margin:40px auto 0;
+        text-align:center;
+        display:flex;
+        justify-content: space-between;
+        cursor:pointer;
+        color: #f3f7f38f;
+    }
+    .sort input{
+        width: 20px;
+        color: #fff;
+        background: #16151b;
+        text-align: center;
+        cursor:text;
+        outline: none
+    }
+    .sort input:hover{border:1px solid #2c3e50;}  
+}
+ .iconhuo{
+    font-size: 24px;
+    color: #fe6702;
+    margin-right: -8px;
+ }
 </style>

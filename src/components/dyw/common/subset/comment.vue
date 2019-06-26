@@ -224,7 +224,7 @@ export default {
     .comments>li {
         display: flex;
         align-items: flex-start;
-        padding: 32px 0 32px 0;
+        padding: 0 0 32px 0;
         border-top:1px solid #f0f0f0;
         border-bottom:1px solid #f0f0f0;
     }
@@ -242,26 +242,6 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        font-size: 12px;
-    }
-    .comments-right>p {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .comments-right>p>a {
-        color: #fd0404;
-        font-weight: 600;
-    }
-     .comments-right>p>span:first-child>i {
-         color: red !important;
-     }
-    .comments-right>p>span:last-child {
-        color: #999;
-    }
-    .comments-right>div {
-        margin: 10px 0 10px 0;
     }
 </style>
 

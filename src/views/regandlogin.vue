@@ -126,10 +126,11 @@ export default {
                    
                     if(result.data.is==0){
                         this.$router.push("/details")
-                        location.reload();  //暂时解决登录后获取不到数据
-                        
+                        location.reload();//解决登录后获取不到数据
                     }else {
                         this.$router.push("/")
+                        location.reload();//解决登录后获取不到数据
+
                     }
                     
                 }else{

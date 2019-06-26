@@ -1,5 +1,6 @@
 <template>
     <el-carousel >
+        <i></i>
         <el-carousel-item><!-- v-for="item in 4" :key="item" -->
                 <img src="http://127.0.0.1:3000/img/banner1.jpg" alt="">
         </el-carousel-item>        
@@ -64,5 +65,77 @@ export default {
     width: 61px  !important;
     height: 3px  !important;
     background-color: #8c8c8c  !important;
+}
+@media screen and (min-width:1200px){
+    .el-carousel__container{
+    height: 510px !important;
+    }
+  /* .el-carousel__indicators--horizontal */
+  /* 左右切换按钮 */
+    .el-carousel__arrow {
+        margin: 0 45px !important;   
+        top: 50%;
+        font-size: 54px !important;
+    }
+    /*  轮播指示符*/
+    .el-carousel__button {
+        width: 61px  !important;
+        height: 3px  !important;
+    }
+}
+@media screen and (min-width:996px) and (max-wdith:1200px){
+    .el-carousel__container{
+    height: 510px !important;
+    }
+  /* .el-carousel__indicators--horizontal */
+  /* 左右切换按钮 */
+    .el-carousel__arrow {
+        margin: 0 45px !important;   
+        top: 50%;
+        font-size: 54px !important;
+    }
+    /*  轮播指示符*/
+    .el-carousel__button {
+        width: 61px  !important;
+        height: 3px  !important;
+    }
+}
+@media screen and (min-width:767px) and (max-width:995px){
+    .el-carousel__container{
+    height: 510px !important;
+    }
+  /* .el-carousel__indicators--horizontal */
+  /* 左右切换按钮 */
+    .el-carousel__arrow {
+        margin: 0 45px !important;   
+        top: 50%;
+        font-size: 54px !important;
+    }
+    /*  轮播指示符*/
+    .el-carousel__button {
+        width: 61px  !important;
+        height: 3px  !important;
+    }
+}
+@media screen and (max-width:766px){
+    .el-carousel__container{
+    height: 245px !important;
+    }
+  /* .el-carousel__indicators--horizontal */
+  /* 左右切换按钮 */
+    .el-carousel__arrow {
+        margin: 0 45px !important;   
+        top: 50%;
+        font-size: 54px !important;
+    }
+    /*  轮播指示符*/
+    .el-carousel__button {
+        width: 61px  !important;
+        height: 3px  !important;
+    }
+    i{display:block;margin-top:70px}
+    .el-carousel__arrow--right,.el-carousel__arrow--left{
+        display:none !important
+    }
 }
 </style>

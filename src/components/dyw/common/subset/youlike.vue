@@ -59,12 +59,14 @@ export default {
             newListArr:[1,2] 
         }
     },
-    props:['movieList'],
+    props:["movieList"],
     watch:{
         movieList(){
             this.newListArr.splice(0,this.newListArr.length)
             for (let i=0;i<6;i++) {
                   this.newListArr.push(this.movieList[i]); 
+                console.log("在此处打印")
+                console.log(this.newListArr)
             }
         }
         

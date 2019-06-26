@@ -16,7 +16,6 @@ require('vue-video-player/src/custom-theme.css')
 // 引入swiper
 import swiper from "swiper"
 import "swiper/dist/css/swiper.min.css"
-
 Vue.use(VideoPlayer)
 
 
