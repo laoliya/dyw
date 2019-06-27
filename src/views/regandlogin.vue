@@ -19,7 +19,7 @@
             <div class="rightContainer">
                 <h2>注册</h2>
                 <input type="text" :placeholder="accountPlaceholder" v-model="reguname" @focus="focushint" @blur="validation">
-                <input type="password" placeholder="密码" v-model="regupwd"  @focus="focushint">
+                <input type="password" :placeholder="pwdPlaceholder" v-model="regupwd"  @focus="focushintpwd" @blur="validationpwd">
                 <input type="text" placeholder="邮箱" v-model="regmail">
                 <input type="text" placeholder="手机号" v-model="regphone">
                 <a href="javascript:;" @click="reg">注册</a>
@@ -34,8 +34,10 @@ export default {
     data(){
         return{
             accountPlaceholder:'用户名',
+            pwdPlaceholder:'密码',
             reguname:'',
             isuname:false,
+            ispwd:false,
             regupwd:'',
             regmail:'',
             regphone:'',
@@ -47,8 +49,8 @@ export default {
     methods:{
         //用户名验证
         validation(){
-                var nreg=/^[a-zA-Z0-9]{3,10}$/
-                var preg=/^[a-zA-z0-9]{3,8}$/
+                var nreg=/^[a-zA-Z0-9_]{4,16}$/  //用户名正则，4到16位（字母，数字，下划线，减号）
+                
                 if(!nreg.test(this.reguname)){
                     this.$alert("用户名格式不正确，请检查输入");
                     return;
@@ -65,6 +67,14 @@ export default {
                     }
                 })
             }
+        },
+        //验证密码正则
+        validationpwd(){
+            var preg=/^[a-zA-Z]\w{5,11}$/ //以字母开头，长度在6-12之间，只能包含字符、数字和下划线。 
+            if(!preg.test(this.regupwd)){
+                    this.$alert("密码不正确，请检查输入");
+                    return;
+                }
         },
         //注册
         reg(){
@@ -100,7 +110,11 @@ export default {
         },
         //提示用户输入正确的用户名
         focushint(){
-            this.accountPlaceholder="最少3位最大10位";
+            this.accountPlaceholder="4到16位（字母，数字，下划线）";
+        },
+        //密码提示
+        focushintpwd(){
+            this.pwdPlaceholder='最少6位(至少1个大写字母1小写字母1个数字1个特殊字符';
         },
         //登录
         login(){
@@ -152,9 +166,10 @@ export default {
         background-size: 100% 100%;
         height: 100%;
         background-color: #ccc;
-        position: fixed;
+        /* position: fixed; */
         width: 100%;
-        z-index: -1; 
+         padding-bottom:20%; 
+        /* z-index: 1;  */
     }  
    .content {
         color: white;
@@ -162,7 +177,7 @@ export default {
         text-align: center;
    }
    .content>h2 {
-       padding-bottom:5%; 
+       padding-bottom:10%; 
    }
    .container {
        width: 50%;
