@@ -1,13 +1,22 @@
 <template>
 <div class="backgroundImg">
-    
+    <!-- <el-button
+    plain
+    @click="open4">
+    错误
+  </el-button> -->
     <div class="content">
-        <h2 style="color:#00c806">欢迎登录</h2>
+        <h2 style="color:#00c806"></h2>
         <div class="container">
             <div class="leftContainer">
                 <h2>登录</h2>
+                <!-- <el-input
+                    placeholder="请输入内容"
+                    v-model="loginuname" clearable>                      
+                </el-input> -->
                 <input type="text" placeholder="用户名" v-model="loginuname"  autofocus>
                 <input type="password" placeholder="密码" v-model="loginupwd">
+                <!-- <el-input placeholder="请输入密码" v-model="loginupwd" show-password></el-input> -->
                 <a href="javascript:;" @click="login">登录</a>
                 <!-- <p>其他方式登录</p>
                 <div>
@@ -20,8 +29,8 @@
                 <h2>注册</h2>
                 <input type="text" :placeholder="accountPlaceholder" v-model="reguname" @focus="focushint" @blur="validation">
                 <input type="password" :placeholder="pwdPlaceholder" v-model="regupwd"  @focus="focushintpwd" @blur="validationpwd">
-                <input type="text" placeholder="邮箱" v-model="regmail">
-                <input type="text" placeholder="手机号" v-model="regphone">
+                <input type="text" placeholder="邮箱" @blur="validationemail" v-model="regmail">
+                <input type="text" placeholder="手机号" v-model="regphone" @blur="validationephone">
                 <a href="javascript:;" @click="reg">注册</a>
             </div>
         </div>
@@ -36,66 +45,124 @@ export default {
             accountPlaceholder:'用户名',
             pwdPlaceholder:'密码',
             reguname:'',
-            isuname:false,
-            ispwd:false,
             regupwd:'',
             regmail:'',
             regphone:'',
             //登录数据
             loginuname:'',
-            loginupwd:''
+            loginupwd:'',
+            isuname:false,
+            ispwd:false,
+            ismail:false,
+            isphone:false
         }
     },
     methods:{
+        
+        open4(title,message) {
+        this.$notify.error({
+          title,
+          message,
+          offset:100,
+          
+        //   position:
+        });
+      } ,
+   
         //用户名验证
         validation(){
+            
+                if(!this.reguname){
+                   this.open4('请重新输入用户名','原因:用户名不可为空') 
+                   return;
+                }else {
                 var nreg=/^[a-zA-Z0-9_]{4,16}$/  //用户名正则，4到16位（字母，数字，下划线，减号）
                 
                 if(!nreg.test(this.reguname)){
-                    this.$alert("用户名格式不正确，请检查输入");
+                 
+                    this.open4('请重新输入用户名','原因:必须是4到16位（字母，数字，下划线）')
                     return;
                 }else{
                 var url="user/userreg";
                  var data={reguname:this.reguname}
                 this.axios.post(url,this.qs.stringify(data)).then(result=>{
                     if(result.data.code==-1){
-                          this.$alert("已存在的用户名");
+                        //   this.$alert("已存在的用户名");
+                        this.open4('请重新输入用户名','原因:用户名已存在')
                           this.isuname=false;
+                     
                          return;
                     }else{
                     this.isuname=true;
                     }
                 })
             }
+                }
         },
         //验证密码正则
         validationpwd(){
             var preg=/^[a-zA-Z]\w{5,11}$/ //以字母开头，长度在6-12之间，只能包含字符、数字和下划线。 
             if(!preg.test(this.regupwd)){
-                    this.$alert("密码不正确，请检查输入");
+                    // this.$alert("密码格式不正确，请检查输入");
+                    this.open4('请重新输入密码','原因:必须以字母开头，长度在6-12位之间')
                     return;
+                }else{
+                    this.ispwd=true;
+                }
+        },
+        //验证邮箱
+        validationemail(){
+            var pemail=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/ 
+            if(!pemail.test(this.regmail)){
+                    this.open4('请重新输入邮箱','邮箱格式不正确')
+                    return;
+                }else{
+                    this.ismail=true;
+                }
+        },
+        //验证手机号
+        validationephone(){
+            var pphone=/^1[3-9][0-9]{9}$/  
+            if(!pphone.test(this.regphone)){
+                    this.open4('请重新输入手机号','原因:手机号格式不正确')
+                    return;
+                }else{
+                    this.isphone=true;
                 }
         },
         //注册
         reg(){
-            if(!this.isuname){
-                this.$alert("请重新输入用户名");
-                return;
-            }
             if(!this.reguname){
-                this.$alert("用户名不可为空");
+                this.open4('请重新输入用户名','原因:用户名不可为空')
                 return;
             }
-            else if(!this.regupwd){
-                this.$alert("密码不可为空");
+            if(!this.isuname){
+                this.open4('请重新输入用户名','原因:用户名格式不正确')
                 return;
-            }else if(!this.regmail){
-                this.$alert("邮箱不可为空");
+            }else if (!this.ispwd){
+                 this.open4('请重新输入密码','原因:密码为空或格式不正确')
                 return;
-            }else if(!this.regphone){
-                this.$alert("手机号不可为空");
-                return;
+            }else if(!this.ismail){
+                 this.open4('请重新输入邮箱','原因:邮箱为空或格式不正确')
+                 return;
+            }else if(!this.isphone){
+                  this.open4('请重新输入手机号','原因:手机号为空或格式不正确')
+                  return;
             }
+            // if(!this.reguname){
+            //     this.$alert("用户名不可为空");
+            //     return;
+            // }
+            // else if(!this.regupwd){
+            //     this.$alert("密码不可为空");
+            //     return;
+            // }else if(!this.regmail){
+            //     this.$alert("邮箱不可为空");
+            //     return;
+            // }else if(!this.regphone){
+            //     this.$alert("手机号不可为空");
+            //     return;
+            // }
             var url="user/reg";
             var data={
                 reguname:this.reguname,
@@ -114,7 +181,7 @@ export default {
         },
         //密码提示
         focushintpwd(){
-            this.pwdPlaceholder='最少6位(至少1个大写字母1小写字母1个数字1个特殊字符';
+            this.pwdPlaceholder='以字母开头长度在6-12位之间';
         },
         //登录
         login(){
@@ -123,11 +190,11 @@ export default {
             // loginupwd:''
             ///111
             if(!this.loginuname){
-                this.$alert("用户名不可为空");
+                this.open4('请重新输入用户名','原因:用户名不可为空')
                 return;
             }
             else if(!this.loginupwd){
-                this.$alert("密码不可为空");
+                this.open4('请重新输入密码','原因:密码不可为空')
                 return;
             }
             var url="user/login";
@@ -158,7 +225,7 @@ export default {
 </script>
 <style scoped>
     h2 {
-        font-size: 45px;
+        font-size:45px;
         font-weight: 500;
     }
     .backgroundImg {
