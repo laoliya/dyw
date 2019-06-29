@@ -58,7 +58,15 @@ export default {
         }
     },
     methods:{
-   
+        // 成功提示
+         open1(title,message) {
+        this.$notify({
+          title,
+          message,
+          type: 'success'
+        });
+      },
+// 失败提示
         open4(title,message) {
         this.$notify.error({
           title,
@@ -149,20 +157,6 @@ export default {
                   this.open4('请重新输入手机号','原因:手机号为空或格式不正确')
                   return;
             }
-            // if(!this.reguname){
-            //     this.$alert("用户名不可为空");
-            //     return;
-            // }
-            // else if(!this.regupwd){
-            //     this.$alert("密码不可为空");
-            //     return;
-            // }else if(!this.regmail){
-            //     this.$alert("邮箱不可为空");
-            //     return;
-            // }else if(!this.regphone){
-            //     this.$alert("手机号不可为空");
-            //     return;
-            // }
             var url="user/reg";
             var data={
                 reguname:this.reguname,
@@ -171,7 +165,8 @@ export default {
                 regphone:this.regphone
                 }
             this.axios.post(url,this.qs.stringify(data)).then(result=>{
-                this.$alert(result.data.msg);
+                // this.$alert(result.data.msg);
+                this.open1('成功',`${result.data.msg}请登录`)
                 location.reload();
             });
         },
@@ -215,7 +210,7 @@ export default {
                     }
                     
                 }else{
-                    this.$alert("登录失败请重新输入");
+                    this.open4('登录失败','原因:账号或密码错误')
                 }
             })
         }
