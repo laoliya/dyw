@@ -3,6 +3,7 @@
     <el-upload
   class="upload-demo"
   ref="upload"
+  data={10}
   action="http://localhost:3000/up/upload"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
@@ -24,6 +25,7 @@ export default {
       return {
         fileList: [],
         a:'',
+        uid:'',
       };
     },
     methods: {
@@ -39,8 +41,8 @@ export default {
         console.log(file);
       },
       parentHandleclick() {
+        this.uid=localStorage.getItem('uid');
          this.$refs.upload.submit()
-
       },
       //图片上传成功时的钩子函数
       success(){
@@ -54,4 +56,3 @@ export default {
 <style>
    
 </style>
-

@@ -199,9 +199,11 @@ export default {
                 // if()
                 // this.$router.push("/header")
                 if(result.data.code==1){
-                   
+                   //保存在本地的登录id
+                   localStorage.setItem('uid',result.data.uid);
                     if(result.data.is==0){
                         this.$router.push("/details")
+                        
                         location.reload();//解决登录后获取不到数据
                     }else {
                         this.$router.push("/")

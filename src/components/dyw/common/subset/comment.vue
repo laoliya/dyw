@@ -68,6 +68,7 @@
 </template>
 <script>
 import upload from "./upload.vue"
+// import { Session } from 'inspector';
 export default {
     data(){
         return{
@@ -102,6 +103,7 @@ export default {
                 //     this.show=true;
                 // }
             })
+            // console.log();
             this.$refs.mychild.parentHandleclick();
 
         }
