@@ -14,14 +14,15 @@
             <div v-show="isshow" @click="isshowdiv">说两句吧~</div>
             <div v-show="isshow1">
                 <div>
-                   <textarea id="inputId" autofocus class="inputtext"   placeholder="说两句吧~"></textarea> 
+                   <textarea id="inputId" autofocus class="inputtext" v-model="comment"   placeholder="说两句吧~"></textarea> 
                 </div>
                 <div class="imgandcomments">
-                    <div>
-                        <i class="iconfont icontupian"></i>
-                        <p>图片</p>
+                    <div class="uploaddiv">
+                        <!-- <i class="iconfont icontupian"></i>
+                        <p>图片</p> -->
+                        <upload ref="mychild" class="upload"></upload>
                     </div>
-                    <a href="javascript:;">发表评论</a>
+                    <a href="javascript:;" @click="publis()">发表评论</a>
                 </div>
             </div>
         </div>
@@ -52,6 +53,7 @@
                         <span>43分钟前</span>
                     </p>
                     <div>看电影之前先看评论的这里集合</div>
+                    <img style="height: 90px;margin-top: 20px;" src="http://127.0.0.1:3000/img/白蛇缘起.jpg" alt="">
                     <div>
                         <span><i class="iconfont iconzan"></i>赞2</span>
                         <span><i class="iconfont iconhuifu"></i>回复</span>
@@ -65,18 +67,43 @@
     </div>
 </template>
 <script>
+import upload from "./upload.vue"
 export default {
     data(){
         return{
             li:[1,2,3], //测试评论
             isshow:true, //判断是否显示隐藏评论框
             isshow1:false,
+            comment:''  //评论内容
         }
     },
+    components:{upload},
     methods:{
         isshowdiv(){
            this.isshow=false; //判断是否显示隐藏评论框
            this.isshow1=true;
+        },
+        publis(){
+           var url="up/comment"
+             var comment=this.comment;
+            this.axios.get(url,{
+                params:{comment:comment}
+            }).then(result=>{
+                // this.code=result.data.code;
+                // //登录状态
+                // if(this.code==1){
+                //     // this.name= result.data.data[0].mname;
+                //     // this.name="欢迎你"+this.name;
+                //     this.movelist();
+                // }else{
+                //     this.$alert("请先登录");
+                    
+                //     this.$router.push("/regandlogin")
+                //     this.show=true;
+                // }
+            })
+            this.$refs.mychild.parentHandleclick();
+
         }
     }
     
@@ -145,6 +172,7 @@ export default {
         cursor: pointer;
         border: 2px solid #f0f0f0;
         text-align: left;
+        
         /* display: none; */
     }
     .headeandin>div:last-child {
@@ -173,6 +201,7 @@ export default {
        display: flex;
        justify-content: space-between;
        align-items: center;
+       position: relative;
    }
    .imgandcomments>div {
        display: flex;
@@ -329,6 +358,11 @@ export default {
         color: #adadad;
         font-size: 14px;
         cursor: pointer;
+    }
+    /* 上传图片组件的样式 */
+    .upload {
+        position: absolute;
+         top: 10%;
     }
     .seemore:hover {
         background-color:#E6E5E5

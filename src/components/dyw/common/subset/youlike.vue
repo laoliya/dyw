@@ -14,7 +14,7 @@
                <li style="width:220px;"  v-for="(item,index) of this.newListArr" :key="index">
                    <div class="cartcontainer">
                        <div class="leftpoto">
-                           <img  :src="'http://127.0.0.1:3000/img/'+item.mimg" alt="">
+                           <img  width="100%" :src="'http://127.0.0.1:3000/img/'+item.mimg" alt="">
                            <div >
                                <span><i class="iconfont iconvip" ></i></span>
                                <span>{{item.mlength}}</span>
@@ -27,7 +27,7 @@
                                </div>
                                <div>
                                    <span>{{item.mname}}</span>
-                                   <span>{{item.aprotagonist}}</span>
+                                   <span class="span2">{{item.aprotagonist}}</span>
                                    <!-- <span>简介</span> -->
                                    <div>
                                        <a href="javascript:;">立即观看</a>
@@ -213,6 +213,13 @@ export default {
          color: #111;
          font-weight: 900;
          font-size: 25px;
+     }
+     .span2 {
+         width: 100%;
+        overflow: hidden;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
      }
      .flaotcat>div:last-child>div {
          width: 220px;
