@@ -3,7 +3,7 @@
     <el-upload
   class="upload-demo"
   ref="upload"
-  data={uid:{啊啊}}
+  :headers="importHeaders"
   action="http://localhost:3000/up/upload"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
@@ -20,20 +20,17 @@
     </template>
 
 <script>
+var mytoken =  localStorage.getItem('uid') // 要保证取到
 export default {
     data() {
       return {
         fileList: [],
         a:'',
-        uid:'',
+         importHeaders: {token: mytoken}
       };
     },
     methods: {
   
-      // submitUpload() {
-      //   console.log(this.fileList);
-      //   this.$refs.upload.submit(this.result);
-      // },
       handleRemove(file, fileList) {
         console.log(file, fileList);
       },
@@ -41,13 +38,11 @@ export default {
         console.log(file);
       },
       parentHandleclick() {
-        this.uid=localStorage.getItem('uid');
          this.$refs.upload.submit()
       },
       //图片上传成功时的钩子函数
       success(){
         this.fileList=[];
-        console.log(this.fileList);
       }
     }
   }

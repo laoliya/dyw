@@ -44,7 +44,7 @@
         </div>
         <!-- 评论内容区域 -->
         <ul class="comments">
-            <li v-for="(item,index) of li" :key="index">
+            <li v-for="(item,index) of list" :key="index">
                 <img class="comments-left" src="http://127.0.0.1:3000/img/白蛇缘起.jpg" alt="">
                 <div class="comments-right">
                     <p>
@@ -68,17 +68,20 @@
 </template>
 <script>
 import upload from "./upload.vue"
-// import { Session } from 'inspector';
+
 export default {
     data(){
         return{
-            li:[1,2,3], //测试评论
+            list:[], //测试评论
             isshow:true, //判断是否显示隐藏评论框
             isshow1:false,
             comment:''  //评论内容
         }
     },
     components:{upload},
+    created(){
+        mylist();
+    },
     methods:{
         isshowdiv(){
            this.isshow=false; //判断是否显示隐藏评论框
@@ -87,8 +90,9 @@ export default {
         publis(){
            var url="up/comment"
              var comment=this.comment;
+             var uid=localStorage.getItem('uid');
             this.axios.get(url,{
-                params:{comment:comment}
+                params:{comment,uid}
             }).then(result=>{
                 // this.code=result.data.code;
                 // //登录状态
@@ -106,6 +110,12 @@ export default {
             // console.log();
             this.$refs.mychild.parentHandleclick();
 
+        },
+        mylist(){
+            var url="up/list"
+            this.axios.get(url).then(result=>{
+                console.log(result);
+            });
         }
     }
     
