@@ -3,7 +3,7 @@
     <el-upload
   class="upload-demo"
   ref="upload"
-  data={10}
+  data={uid:{啊啊}}
   action="http://localhost:3000/up/upload"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
