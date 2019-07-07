@@ -84,11 +84,13 @@ export default {
         
         var url='up/list'
         this.axios.get(url).then(result=>{
-            console.log('进来了');
+            // console.log('进来了');
             this.commentList=result.data;
         })
     },
-  
+    watch:{
+         
+    },
     methods:{
         isshowdiv(){
            this.isshow=false; //判断是否显示隐藏评论框
@@ -115,13 +117,16 @@ export default {
                 // }
             })
             // console.log();
-            this.$refs.mychild.parentHandleclick();
+            this.$refs.mychild.parentHandleclick().then(this.mylist());
+             
 
         },
-        mylist(){
+       mylist(){
             var url="up/list"
             this.axios.get(url).then(result=>{
-                console.log(result);
+                this.commentList.unshift(result.data[0])
+                console.log(this.commentList);
+                console.log('执行了watch');
             });
         }
     }
