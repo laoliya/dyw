@@ -4,7 +4,7 @@
         <div class="header">
             <div>
                 <h2>影评</h2>
-                <p>(120)</p>
+                <p>({{commentList.length}})</p>
             </div>
             <a href="javascript:;">影评广场</a>
         </div>
@@ -44,18 +44,18 @@
         </div>
         <!-- 评论内容区域 -->
         <ul class="comments">
-            <li v-for="(item,index) of list" :key="index">
+            <li v-for="(item,index) of commentList" :key="index">
                 <img class="comments-left" src="http://127.0.0.1:3000/img/白蛇缘起.jpg" alt="">
                 <div class="comments-right">
                     <p>
-                        <a href="javascript:;">AA嘉鸿</a>
+                        <a href="javascript:;">{{item.mname}}</a>
                         <span><i class="iconfont iconvip"></i></span>
-                        <span>43分钟前</span>
+                        <span>{{item.cmtime}}</span>
                     </p>
-                    <div>看电影之前先看评论的这里集合</div>
-                    <img style="height: 90px;margin-top: 20px;" src="http://127.0.0.1:3000/img/白蛇缘起.jpg" alt="">
+                    <div>{{item.cmment}}</div>
+                    <img style="height: 90px;margin-top: 20px;" :src="'http://127.0.0.1:3000/upload/'+item.cmimg" alt="">
                     <div>
-                        <span><i class="iconfont iconzan"></i>赞2</span>
+                        <span><i class="iconfont iconzan"></i>赞{{item.cmzan}}</span>
                         <span><i class="iconfont iconhuifu"></i>回复</span>
                     </div>
                 </div>
@@ -75,13 +75,20 @@ export default {
             list:[], //测试评论
             isshow:true, //判断是否显示隐藏评论框
             isshow1:false,
-            comment:''  //评论内容
+            comment:'', //评论内容
+            commentList:[],
         }
     },
     components:{upload},
     created(){
-        mylist();
+        
+        var url='up/list'
+        this.axios.get(url).then(result=>{
+            console.log('进来了');
+            this.commentList=result.data;
+        })
     },
+  
     methods:{
         isshowdiv(){
            this.isshow=false; //判断是否显示隐藏评论框
