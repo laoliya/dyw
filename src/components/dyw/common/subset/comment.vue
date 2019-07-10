@@ -117,7 +117,9 @@ export default {
                 // }
             })
             // console.log();
-            this.$refs.mychild.parentHandleclick().then(this.mylist());
+            this.$refs.mychild.parentHandleclick();
+            //执行刷新
+             location.reload();
              
 
         },
